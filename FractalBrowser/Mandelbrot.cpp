@@ -2,6 +2,8 @@
 //  Mandelbrot.cpp
 //  FractalBrowser
 //
+//  MandelBrot class that can calculate itself to an array
+//
 //  Created by Dominik on 3/30/15.
 //  Copyright (c) 2015 Team060. All rights reserved.
 //
@@ -29,15 +31,19 @@ unsigned int* Mandelbrot::render(){
             int iteration = 0;
             double x = 0.0;
             double y = 0.0;
+            //convert pixel x coordinate to coordinate on real axis of complex plane
             double x0 = leftReal + ((double) px) / ((double) width) * (rightReal-leftReal);
+            //convert pixel y coordinate to coordinate on imaginary axis of complex plane
             double y0 = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
             
+            //do iteration step
             while(x*x + y*y < 4 && iteration < maxIterations){
                 double xtemp = x*x - y*y + x0;
                 y = 2*x*y + y0;
                 x = xtemp;
                 iteration++;
             }
+            //write result
             pixels[py*width+px] = mapColor(iteration);
             
         }

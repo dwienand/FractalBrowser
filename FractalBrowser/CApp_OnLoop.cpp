@@ -2,6 +2,8 @@
 //  CApp_OnLoop.cpp
 //  FractalBrowser
 //
+//  Loop handler for FractlaBrowser
+//
 //  Created by Dominik on 3/30/15.
 //  Copyright (c) 2015 Team060. All rights reserved.
 //

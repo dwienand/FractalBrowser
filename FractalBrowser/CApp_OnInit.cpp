@@ -12,15 +12,19 @@ bool CApp::OnInit() {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
-    
+
     window = SDL_CreateWindow("Fractal Browser",
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
-    //SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height);
+    
+    //create array for rendering into
     pixels = new Uint32[width * height];
+    
+    //set it to be all white initially
     memset(pixels, 255, width * height * sizeof(Uint32));
     
+    //create new mandelbrot to render
     mandelbrot = new Mandelbrot(width, height);
     
     
