@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B4BE8AF91ACA312600F25852 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8AF81ACA312600F25852 /* main.cpp */; };
+		B4BE8B061ACA319300F25852 /* CApp_OnCleanup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */; };
+		B4BE8B071ACA319300F25852 /* CApp_OnEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */; };
+		B4BE8B081ACA319300F25852 /* CApp_OnInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B011ACA319300F25852 /* CApp_OnInit.cpp */; };
+		B4BE8B091ACA319300F25852 /* CApp_OnLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B021ACA319300F25852 /* CApp_OnLoop.cpp */; };
+		B4BE8B0A1ACA319300F25852 /* CApp_OnRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B031ACA319300F25852 /* CApp_OnRender.cpp */; };
+		B4BE8B0B1ACA319300F25852 /* CApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B041ACA319300F25852 /* CApp.cpp */; };
+		B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE8B151ACA31AE00F25852 /* SDL2.framework */; };
+		B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +31,26 @@
 
 /* Begin PBXFileReference section */
 		B4BE8AF51ACA312600F25852 /* FractalBrowser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FractalBrowser; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4BE8AF81ACA312600F25852 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnCleanup.cpp; sourceTree = "<group>"; };
+		B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnEvent.cpp; sourceTree = "<group>"; };
+		B4BE8B011ACA319300F25852 /* CApp_OnInit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnInit.cpp; sourceTree = "<group>"; };
+		B4BE8B021ACA319300F25852 /* CApp_OnLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnLoop.cpp; sourceTree = "<group>"; };
+		B4BE8B031ACA319300F25852 /* CApp_OnRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnRender.cpp; sourceTree = "<group>"; };
+		B4BE8B041ACA319300F25852 /* CApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp.cpp; sourceTree = "<group>"; };
+		B4BE8B051ACA319300F25852 /* CApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CApp.h; sourceTree = "<group>"; };
+		B4BE8B0D1ACA31AE00F25852 /* AEProfiling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEProfiling.framework; sourceTree = "<group>"; };
+		B4BE8B0E1ACA31AE00F25852 /* AERegistration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AERegistration.framework; sourceTree = "<group>"; };
+		B4BE8B0F1ACA31AE00F25852 /* AudioMixEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioMixEngine.framework; sourceTree = "<group>"; };
+		B4BE8B101ACA31AE00F25852 /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iTunesLibrary.framework; sourceTree = "<group>"; };
+		B4BE8B111ACA31AE00F25852 /* NyxAudioAnalysis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NyxAudioAnalysis.framework; sourceTree = "<group>"; };
+		B4BE8B121ACA31AE00F25852 /* PluginManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PluginManager.framework; sourceTree = "<group>"; };
+		B4BE8B131ACA31AE00F25852 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Python.framework; sourceTree = "<group>"; };
+		B4BE8B141ACA31AE00F25852 /* R.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = R.framework; sourceTree = "<group>"; };
+		B4BE8B151ACA31AE00F25852 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
+		B4BE8B161ACA31AE00F25852 /* Tcl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tcl.framework; sourceTree = "<group>"; };
+		B4BE8B171ACA31AE00F25852 /* Tk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tk.framework; sourceTree = "<group>"; };
+		B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mandelbrot.cpp; sourceTree = "<group>"; };
+		B4BE8B1A1ACA31F400F25852 /* Mandelbrot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mandelbrot.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +68,7 @@
 		B4BE8AEC1ACA312600F25852 = {
 			isa = PBXGroup;
 			children = (
+				B4BE8B0C1ACA31AE00F25852 /* Frameworks */,
 				B4BE8AF71ACA312600F25852 /* FractalBrowser */,
 				B4BE8AF61ACA312600F25852 /* Products */,
 			);
@@ -57,9 +85,36 @@
 		B4BE8AF71ACA312600F25852 /* FractalBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				B4BE8AF81ACA312600F25852 /* main.cpp */,
+				B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */,
+				B4BE8B1A1ACA31F400F25852 /* Mandelbrot.h */,
+				B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */,
+				B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */,
+				B4BE8B011ACA319300F25852 /* CApp_OnInit.cpp */,
+				B4BE8B021ACA319300F25852 /* CApp_OnLoop.cpp */,
+				B4BE8B031ACA319300F25852 /* CApp_OnRender.cpp */,
+				B4BE8B041ACA319300F25852 /* CApp.cpp */,
+				B4BE8B051ACA319300F25852 /* CApp.h */,
 			);
 			path = FractalBrowser;
+			sourceTree = "<group>";
+		};
+		B4BE8B0C1ACA31AE00F25852 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4BE8B0D1ACA31AE00F25852 /* AEProfiling.framework */,
+				B4BE8B0E1ACA31AE00F25852 /* AERegistration.framework */,
+				B4BE8B0F1ACA31AE00F25852 /* AudioMixEngine.framework */,
+				B4BE8B101ACA31AE00F25852 /* iTunesLibrary.framework */,
+				B4BE8B111ACA31AE00F25852 /* NyxAudioAnalysis.framework */,
+				B4BE8B121ACA31AE00F25852 /* PluginManager.framework */,
+				B4BE8B131ACA31AE00F25852 /* Python.framework */,
+				B4BE8B141ACA31AE00F25852 /* R.framework */,
+				B4BE8B151ACA31AE00F25852 /* SDL2.framework */,
+				B4BE8B161ACA31AE00F25852 /* Tcl.framework */,
+				B4BE8B171ACA31AE00F25852 /* Tk.framework */,
+			);
+			name = Frameworks;
+			path = ../../../../../Library/Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +173,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4BE8AF91ACA312600F25852 /* main.cpp in Sources */,
+				B4BE8B061ACA319300F25852 /* CApp_OnCleanup.cpp in Sources */,
+				B4BE8B0A1ACA319300F25852 /* CApp_OnRender.cpp in Sources */,
+				B4BE8B071ACA319300F25852 /* CApp_OnEvent.cpp in Sources */,
+				B4BE8B0B1ACA319300F25852 /* CApp.cpp in Sources */,
+				B4BE8B091ACA319300F25852 /* CApp_OnLoop.cpp in Sources */,
+				B4BE8B081ACA319300F25852 /* CApp_OnInit.cpp in Sources */,
+				B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +263,10 @@
 		B4BE8AFD1ACA312600F25852 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -209,6 +274,10 @@
 		B4BE8AFE1ACA312600F25852 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
