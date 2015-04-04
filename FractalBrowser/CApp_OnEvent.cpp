@@ -20,6 +20,7 @@ void CApp::OnEvent(SDL_Event* event) {
             break;
         case SDL_KEYDOWN:
             switch(event->key.keysym.sym ){
+                    
                 case SDLK_LEFT:
                     mandelbrot->moveFrameLeft();
                     pixels = mandelbrot->render();
@@ -36,6 +37,7 @@ void CApp::OnEvent(SDL_Event* event) {
                     mandelbrot->moveFrameDown();
                     pixels =mandelbrot->render();
                     break;
+                    
                 case SDLK_SPACE:
                     mandelbrot->zoomIn();
                     pixels = mandelbrot->render();
@@ -44,6 +46,7 @@ void CApp::OnEvent(SDL_Event* event) {
                     mandelbrot->zoomOut();
                     pixels = mandelbrot->render();
                     break;
+                    
                 case SDLK_q:
                     mandelbrot->rotateColorFilterLeft();
                     break;
@@ -53,6 +56,10 @@ void CApp::OnEvent(SDL_Event* event) {
                     
                 case SDLK_r:
                     mandelbrot->render();
+                    break;
+                    
+                case SDLK_ESCAPE:
+                    Running = false;
                     break;
                     
                 default:

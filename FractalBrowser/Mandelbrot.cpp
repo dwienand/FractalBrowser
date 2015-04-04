@@ -64,6 +64,10 @@ unsigned int* Mandelbrot::render(){
     
 }
 
+//
+// Color filters
+//
+
 inline unsigned int Mandelbrot::bwFilter(unsigned int iterations){
     if (iterations >= maxIterations){
         return WHITE;
@@ -106,6 +110,24 @@ inline unsigned int Mandelbrot::blueFilter(unsigned int iterations){
     }
 }
 
+void Mandelbrot::rotateColorFilterLeft(){
+    if (colorFilterIndex == 0)
+        colorFilterIndex = colorFilterCount - 1;
+    else
+        colorFilterIndex--;
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+}
+
+void Mandelbrot::rotateColorFilterRight(){
+    colorFilterIndex = (colorFilterIndex + 1) % colorFilterCount;
+    
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+}
+
+
+//
+// Navigating the Mandelbrot
+//
 
 void Mandelbrot::moveFrameUp(){
     double frameHeight = upperImag - lowerImag;
@@ -172,17 +194,5 @@ void Mandelbrot::zoomOut(){
     
 }
 
-void Mandelbrot::rotateColorFilterLeft(){
-    if (colorFilterIndex == 0)
-        colorFilterIndex = colorFilterCount - 1;
-    else
-        colorFilterIndex--;
-    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
-}
 
-void Mandelbrot::rotateColorFilterRight(){
-    colorFilterIndex = (colorFilterIndex + 1) % colorFilterCount;
-    
-    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
-}
 

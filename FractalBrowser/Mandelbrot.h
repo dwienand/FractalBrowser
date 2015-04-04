@@ -23,21 +23,24 @@ private:
     
     unsigned int maxIterations = 1000;
     
+    //color constants
     const unsigned int RED = 255 << 16;
     const unsigned int GREEN = 255 << 8;
     const unsigned int BLUE = 255;
     const unsigned int WHITE = RED | GREEN | BLUE;
     
+    //Mandelbrot dimensions
     double leftReal = -2.5;
     double rightReal = 1.0;
     double lowerImag = -1.0;
     double upperImag = 1.0;
     
-    double moveSpeed = 0.1;
     
+    double moveSpeed = 0.1;
     double zoomSpeed = 0.1;
     
-    
+    // variables for managing color filters
+    // to include a new filter, add it to the colorFilters array and increment colorFilterCount accordingly
     unsigned int colorFilterIndex = 1;
     const static unsigned int colorFilterCount = 4;
     unsigned int mapColor(unsigned int iterations);
@@ -46,8 +49,6 @@ private:
     unsigned int redFilter(unsigned int iterations);
     unsigned int greenFilter(unsigned int iterations);
     unsigned int blueFilter(unsigned int iterations);
-    
-    
     
     typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int);
     FunctionPointer colorFilters[colorFilterCount] = {

@@ -11,9 +11,12 @@
 #include "CApp.h"
 
 void CApp::OnCleanup() {
+    LOG(INFO) << "Tearing down FractalBrowser ...";
     delete[] pixels;
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    
+    LOG(INFO) << "Terminated FractalBrowser";
 }

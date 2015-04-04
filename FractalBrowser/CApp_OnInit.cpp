@@ -21,6 +21,8 @@ bool CApp::OnInit() {
     
     LOG(INFO) << "Sucessfully intialized SDL";
     
+    LOG(INFO) << "READ ME: \n navigate x/y plane with arrow keys, zoom in with space and out with 'v' rotate color filters with 'q' and 'e'\n hit escape to quit";
+    
     //create array for rendering into
     pixels = new Uint32[width * height];
     
