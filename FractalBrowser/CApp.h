@@ -13,6 +13,9 @@
 #include <SDL2/SDL.h>
 #include "Mandelbrot.h"
 
+#include "easylogging++.h"
+
+
 class CApp {
 private:
     bool            Running;

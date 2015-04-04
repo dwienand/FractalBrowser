@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <chrono>
+#include "easylogging++.h"
 
 
 class Mandelbrot {
@@ -20,6 +22,11 @@ private:
     unsigned int* pixels;
     
     unsigned int maxIterations = 1000;
+    
+    const unsigned int RED = 255 << 16;
+    const unsigned int GREEN = 255 << 8;
+    const unsigned int BLUE = 255;
+    const unsigned int WHITE = RED | GREEN | BLUE;
     
     double leftReal = -2.5;
     double rightReal = 1.0;
@@ -30,7 +37,25 @@ private:
     
     double zoomSpeed = 0.1;
     
+    
+    unsigned int colorFilterIndex = 1;
+    const static unsigned int colorFilterCount = 4;
     unsigned int mapColor(unsigned int iterations);
+    
+    unsigned int bwFilter(unsigned int iterations);
+    unsigned int redFilter(unsigned int iterations);
+    unsigned int greenFilter(unsigned int iterations);
+    unsigned int blueFilter(unsigned int iterations);
+    
+    
+    
+    typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int);
+    FunctionPointer colorFilters[colorFilterCount] = {
+        &Mandelbrot::bwFilter,
+        &Mandelbrot::redFilter,
+        &Mandelbrot::greenFilter,
+        &Mandelbrot::blueFilter
+        };
 
     
 public:
@@ -44,6 +69,9 @@ public:
     void moveFrameRight();
     void zoomIn();
     void zoomOut();
+    
+    void rotateColorFilterLeft();
+    void rotateColorFilterRight();
     
 };
 

@@ -9,6 +9,8 @@
 //
 
 #include "CApp.h"
+INITIALIZE_EASYLOGGINGPP
+
 
 CApp::CApp() {
     window = NULL;

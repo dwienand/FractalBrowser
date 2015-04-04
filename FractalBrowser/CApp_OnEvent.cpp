@@ -36,6 +36,25 @@ void CApp::OnEvent(SDL_Event* event) {
                     mandelbrot->moveFrameDown();
                     pixels =mandelbrot->render();
                     break;
+                case SDLK_SPACE:
+                    mandelbrot->zoomIn();
+                    pixels = mandelbrot->render();
+                    break;
+                case SDLK_v:
+                    mandelbrot->zoomOut();
+                    pixels = mandelbrot->render();
+                    break;
+                case SDLK_q:
+                    mandelbrot->rotateColorFilterLeft();
+                    break;
+                case SDLK_e:
+                    mandelbrot->rotateColorFilterRight();
+                    break;
+                    
+                case SDLK_r:
+                    mandelbrot->render();
+                    break;
+                    
                 default:
                     break;
             }

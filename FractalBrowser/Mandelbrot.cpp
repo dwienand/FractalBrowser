@@ -22,7 +22,11 @@ Mandelbrot::Mandelbrot(int width, int height){
 
 
 unsigned int* Mandelbrot::render(){    
-        
+    LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
+    
+    long startTime = std::chrono::duration_cast< std::chrono::milliseconds >(
+                                                    std::chrono::high_resolution_clock::now().time_since_epoch()
+                                                    ).count();
     memset(pixels, 0, width * height * sizeof(unsigned int));
 
     
@@ -44,21 +48,61 @@ unsigned int* Mandelbrot::render(){
                 iteration++;
             }
             //write result
-            pixels[py*width+px] = mapColor(iteration);
+            
+            pixels[py*width+px] = (this->*colorFilters[colorFilterIndex])(iteration);
             
         }
     }
+    
+    long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
+                                                                             std::chrono::high_resolution_clock::now().time_since_epoch()
+                                                                             ).count();
+    long runTime = endTime - startTime;
+    LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
     
     return pixels;
     
 }
 
-inline unsigned int Mandelbrot::mapColor(unsigned int iterations){
+inline unsigned int Mandelbrot::bwFilter(unsigned int iterations){
     if (iterations >= maxIterations){
-        return 255;
+        return WHITE;
     }
     else{
         return 0;
+    }
+}
+
+inline unsigned int Mandelbrot::redFilter(unsigned int iterations){
+    if (iterations >= maxIterations){
+        return RED;
+    }
+    else{
+        double relativeBrightness = (double) iterations / (double) maxIterations;
+        unsigned int redTone =  (unsigned int) (((double) RED)*relativeBrightness);
+        return redTone;
+    }
+}
+
+inline unsigned int Mandelbrot::greenFilter(unsigned int iterations){
+    if (iterations >= maxIterations){
+        return GREEN;
+    }
+    else{
+        double relativeBrightness = (double) iterations / (double) maxIterations;
+        unsigned int greenTone =  (unsigned int) (((double) GREEN)*relativeBrightness);
+        return greenTone;
+    }
+}
+
+inline unsigned int Mandelbrot::blueFilter(unsigned int iterations){
+    if (iterations >= maxIterations){
+        return BLUE;
+    }
+    else{
+        double relativeBrightness = (double) iterations / (double) maxIterations;
+        unsigned int blueTone =  (unsigned int) (((double) BLUE)*relativeBrightness);
+        return blueTone;
     }
 }
 
@@ -70,6 +114,7 @@ void Mandelbrot::moveFrameUp(){
     lowerImag -= stepSize;
     
 }
+
 void Mandelbrot::moveFrameDown(){
     double frameHeight = upperImag - lowerImag;
     double stepSize = frameHeight * moveSpeed;
@@ -77,6 +122,7 @@ void Mandelbrot::moveFrameDown(){
     lowerImag += stepSize;
     
 }
+
 void Mandelbrot::moveFrameLeft(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
@@ -85,6 +131,7 @@ void Mandelbrot::moveFrameLeft(){
     rightReal -= stepSize;
     
 }
+
 void Mandelbrot::moveFrameRight(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
@@ -93,10 +140,49 @@ void Mandelbrot::moveFrameRight(){
     rightReal += stepSize;
     
 }
+
 void Mandelbrot::zoomIn(){
+    double frameHeight = upperImag - lowerImag;
+    double frameWidth = rightReal - leftReal;
     
+    double verticalStepSize = frameHeight * zoomSpeed;
+    double horizontalStepSize = frameWidth * zoomSpeed;
+    
+    leftReal += horizontalStepSize;
+    rightReal -= horizontalStepSize;
+    
+    upperImag -= verticalStepSize;
+    lowerImag += verticalStepSize;
 }
+
+
 void Mandelbrot::zoomOut(){
     
+    double frameHeight = upperImag - lowerImag;
+    double frameWidth = rightReal - leftReal;
+    
+    double verticalStepSize = frameHeight * zoomSpeed;
+    double horizontalStepSize = frameWidth * zoomSpeed;
+    
+    leftReal -= horizontalStepSize;
+    rightReal += horizontalStepSize;
+    
+    upperImag += verticalStepSize;
+    lowerImag -= verticalStepSize;
+    
+}
+
+void Mandelbrot::rotateColorFilterLeft(){
+    if (colorFilterIndex == 0)
+        colorFilterIndex = colorFilterCount - 1;
+    else
+        colorFilterIndex--;
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+}
+
+void Mandelbrot::rotateColorFilterRight(){
+    colorFilterIndex = (colorFilterIndex + 1) % colorFilterCount;
+    
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
 }
 
