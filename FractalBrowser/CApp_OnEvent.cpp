@@ -18,6 +18,28 @@ void CApp::OnEvent(SDL_Event* event) {
             if (event->button.button == SDL_BUTTON_RIGHT)
                 pixels = mandelbrot->render();
             break;
+        case SDL_KEYDOWN:
+            switch(event->key.keysym.sym ){
+                case SDLK_LEFT:
+                    mandelbrot->moveFrameLeft();
+                    pixels = mandelbrot->render();
+                    break;
+                case SDLK_RIGHT:
+                    mandelbrot->moveFrameRight();
+                    pixels = mandelbrot->render();
+                    break;
+                case SDLK_UP:
+                    mandelbrot->moveFrameUp();
+                    pixels = mandelbrot->render();
+                    break;
+                case SDLK_DOWN:
+                    mandelbrot->moveFrameDown();
+                    pixels =mandelbrot->render();
+                    break;
+                default:
+                    break;
+            }
+            break;
             
         case SDL_QUIT:
             Running = false;

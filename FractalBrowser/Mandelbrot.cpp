@@ -63,3 +63,40 @@ inline unsigned int Mandelbrot::mapColor(unsigned int iterations){
 }
 
 
+void Mandelbrot::moveFrameUp(){
+    double frameHeight = upperImag - lowerImag;
+    double stepSize = frameHeight * moveSpeed;
+    upperImag -= stepSize;
+    lowerImag -= stepSize;
+    
+}
+void Mandelbrot::moveFrameDown(){
+    double frameHeight = upperImag - lowerImag;
+    double stepSize = frameHeight * moveSpeed;
+    upperImag += stepSize;
+    lowerImag += stepSize;
+    
+}
+void Mandelbrot::moveFrameLeft(){
+    double frameWidth = rightReal - leftReal;
+    double stepSize = frameWidth * moveSpeed;
+    
+    leftReal -= stepSize;
+    rightReal -= stepSize;
+    
+}
+void Mandelbrot::moveFrameRight(){
+    double frameWidth = rightReal - leftReal;
+    double stepSize = frameWidth * moveSpeed;
+    
+    leftReal += stepSize;
+    rightReal += stepSize;
+    
+}
+void Mandelbrot::zoomIn(){
+    
+}
+void Mandelbrot::zoomOut(){
+    
+}
+

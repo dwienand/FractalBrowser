@@ -26,6 +26,10 @@ private:
     double lowerImag = -1.0;
     double upperImag = 1.0;
     
+    double moveSpeed = 0.1;
+    
+    double zoomSpeed = 0.1;
+    
     unsigned int mapColor(unsigned int iterations);
 
     
@@ -33,6 +37,13 @@ public:
     Mandelbrot(int width, int height);
     
     unsigned int* render();
+    
+    void moveFrameUp();
+    void moveFrameDown();
+    void moveFrameLeft();
+    void moveFrameRight();
+    void zoomIn();
+    void zoomOut();
     
 };
 
