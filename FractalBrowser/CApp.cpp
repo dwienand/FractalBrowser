@@ -31,7 +31,7 @@ int CApp::OnExecute() {
         SDL_WaitEvent(&event);
         OnEvent(&event);
         
-       
+        
     }
     
     OnCleanup();

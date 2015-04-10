@@ -56,6 +56,7 @@ void CApp::OnEvent(SDL_Event* event) {
                     break;
                     
                 case SDLK_r:
+                    mandelbrot->reset();
                     mandelbrot->render();
                     break;
                     

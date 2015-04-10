@@ -36,10 +36,10 @@ void Mandelbrot::render(){
     LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
     
     long startTime = std::chrono::duration_cast< std::chrono::milliseconds >(
-                                                    std::chrono::high_resolution_clock::now().time_since_epoch()
-                                                    ).count();
+                                                                             std::chrono::high_resolution_clock::now().time_since_epoch()
+                                                                             ).count();
     memset(mandelbrotInt, 0, width * height * sizeof(unsigned int));
-
+    
     
     for(int px = 0; px < width; px++){
         for(int py = 0; py < height; py++){
@@ -58,7 +58,7 @@ void Mandelbrot::render(){
                 x = xtemp;
                 iterations++;
             }
-
+            
             //save raw iteration count
             mandelbrotInt[py*width+px] = iterations;
             
@@ -79,11 +79,11 @@ void Mandelbrot::render(){
     applyColorFilter();
     
     long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
-                                                                             std::chrono::high_resolution_clock::now().time_since_epoch()
-                                                                             ).count();
+                                                                           std::chrono::high_resolution_clock::now().time_since_epoch()
+                                                                           ).count();
     long runTime = endTime - startTime;
     LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
-        
+    
 }
 
 void Mandelbrot::applyColorFilter(){
@@ -141,19 +141,19 @@ inline unsigned int Mandelbrot::blueFilter(unsigned int iterations, double float
 }
 
 inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, double floatPart){
-       int* palette;
+    int* palette;
     
     if (iterations < maxIterations){
-    unsigned int color1 = palette[(int) floor(iterations)];
-    unsigned int color2 = palette[(int)floor(iterations) + 1];
-    // iteration % 1 = fractional part of iteration.
+        unsigned int color1 = palette[(int) floor(iterations)];
+        unsigned int color2 = palette[(int)floor(iterations) + 1];
+        // iteration % 1 = fractional part of iteration.
         unsigned int color = (unsigned int) (color2 - color1) * floatPart;
         
         return color;
     }
     return 0;
     
-    }
+}
 
 void Mandelbrot::rotateColorFilterLeft(){
     if (colorFilterIndex == 0)
@@ -237,6 +237,13 @@ void Mandelbrot::zoomOut(){
     upperImag += verticalStepSize;
     lowerImag -= verticalStepSize;
     
+}
+
+void Mandelbrot::reset(){
+    leftReal = initialLeftReal;
+    rightReal = initialRightReal;
+    lowerImag = initialLowerImag;
+    upperImag = initialUpperImag;
 }
 
 

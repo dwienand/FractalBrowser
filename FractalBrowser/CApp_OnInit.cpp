@@ -12,7 +12,7 @@ bool CApp::OnInit() {
     
     LOG(INFO) << "Initializing SDL ...";
     
-
+    
     if(this->retinaSupported){
         SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
         width *= 2;
@@ -22,10 +22,10 @@ bool CApp::OnInit() {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
-
+    
     if(retinaSupported){
-    window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width / 2, height / 2,
-                              SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
+        window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width / 2, height / 2,
+                                  SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
     }else{
         window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
                                   SDL_WINDOW_SHOWN);

@@ -12,7 +12,7 @@
 
 void CApp::OnCleanup() {
     LOG(INFO) << "Tearing down FractalBrowser ...";
-
+    
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

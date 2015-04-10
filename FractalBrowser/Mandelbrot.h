@@ -33,10 +33,15 @@ private:
     const unsigned int WHITE = RED | GREEN | BLUE;
     
     //Mandelbrot dimensions
-    double leftReal = -2.5;
-    double rightReal = 1.0;
-    double lowerImag = -1.0;
-    double upperImag = 1.0;
+    const double initialLeftReal = -2.5;
+    const double initialRightReal = 1.0;
+    const double initialLowerImag = -1.0;
+    const double initialUpperImag = 1.0;
+    
+    double leftReal = initialLeftReal;
+    double rightReal = initialRightReal;
+    double lowerImag = initialLowerImag;
+    double upperImag = initialUpperImag;
     
     
     double moveSpeed = 0.1;
@@ -60,8 +65,8 @@ private:
         &Mandelbrot::redFilter,
         &Mandelbrot::greenFilter,
         &Mandelbrot::blueFilter
-        };
-
+    };
+    
     
 public:
     Mandelbrot(int width, int height);
@@ -76,6 +81,7 @@ public:
     void moveFrameRight();
     void zoomIn();
     void zoomOut();
+    void reset();
     
     void rotateColorFilterLeft();
     void rotateColorFilterRight();
