@@ -12,16 +12,31 @@ bool CApp::OnInit() {
     
     LOG(INFO) << "Initializing SDL ...";
     
-    SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
+
+    if(this->retinaSupported){
+        SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
+        width *= 2;
+        height *= 2;
+    }
+    
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
 
-    window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
-                              SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
+    if(retinaSupported){
+    window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width / 2, height / 2,
+                              SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
+    }else{
+        window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+                                  SDL_WINDOW_SHOWN);
+    }
     
     renderer = SDL_CreateRenderer(window, -1, 0);
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height);
+    
+    int w, h;
+    SDL_GL_GetDrawableSize(window, &w, &h);
+    std::cout << "Drawable:" << w << "x" << h << std::endl;
     
     LOG(INFO) << "Sucessfully intialized SDL";
     
