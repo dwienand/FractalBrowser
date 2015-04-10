@@ -15,6 +15,8 @@
 #include <chrono>
 #include <cmath>
 #include "easylogging++.h"
+#include <vector>
+
 
 
 class Mandelbrot {
@@ -24,7 +26,11 @@ private:
     double* mandelbrotFloat;
     unsigned int* mandelbrotPixels;
     
+    
+    std::vector<unsigned int>* palette;
+    
     unsigned int maxIterations = 1000;
+    const double escapeRadius = 20.0;
     
     //color constants
     const unsigned int RED = 255 << 16;
@@ -50,7 +56,7 @@ private:
     // variables for managing color filters
     // to include a new filter, add it to the colorFilters array and increment colorFilterCount accordingly
     unsigned int colorFilterIndex = 1;
-    const static unsigned int colorFilterCount = 4;
+    const static unsigned int colorFilterCount = 6;
     unsigned int mapColor(unsigned int iterations);
     
     unsigned int bwFilter(unsigned int iterations, double floatPart);
@@ -58,13 +64,16 @@ private:
     unsigned int greenFilter(unsigned int iterations, double floatPart);
     unsigned int blueFilter(unsigned int iterations, double floatPart);
     unsigned int continuousColoring(unsigned int iterations, double floatPart);
+    unsigned int paletteFilter(unsigned int iterations, double floatPart);
     
     typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int, double floatPart);
     FunctionPointer colorFilters[colorFilterCount] = {
         &Mandelbrot::bwFilter,
         &Mandelbrot::redFilter,
         &Mandelbrot::greenFilter,
-        &Mandelbrot::blueFilter
+        &Mandelbrot::blueFilter,
+        &Mandelbrot::continuousColoring,
+        &Mandelbrot::paletteFilter
     };
     
     

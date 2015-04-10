@@ -34,13 +34,10 @@ bool CApp::OnInit() {
     renderer = SDL_CreateRenderer(window, -1, 0);
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height);
     
-    int w, h;
-    SDL_GL_GetDrawableSize(window, &w, &h);
-    std::cout << "Drawable:" << w << "x" << h << std::endl;
     
     LOG(INFO) << "Sucessfully intialized SDL";
     
-    LOG(INFO) << "READ ME: \n navigate x/y plane with arrow keys, zoom in with space and out with 'v' rotate color filters with 'q' and 'e'\n hit escape to quit";
+    LOG(INFO) << "READ ME: \n navigate x/y plane with arrow keys, zoom in with space and out with 'v', reset viewpoint with 'r', rotate color filters with 'q' and 'e'\n hit escape to quit";
     
     //create array for rendering into
     pixels = new Uint32[width * height];

@@ -15,17 +15,19 @@
 		B4BE8B0B1ACA319300F25852 /* CApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B041ACA319300F25852 /* CApp.cpp */; };
 		B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE8B151ACA31AE00F25852 /* SDL2.framework */; };
 		B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
+		B4CC0A4F1AD7ABA3008217F7 /* color_palettes in CopyFiles */ = {isa = PBXBuildFile; fileRef = B4CC0A4E1AD7AB9C008217F7 /* color_palettes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B4BE8AF31ACA312600F25852 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				B4CC0A4F1AD7ABA3008217F7 /* color_palettes in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -51,6 +53,8 @@
 		B4BE8B171ACA31AE00F25852 /* Tk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tk.framework; sourceTree = "<group>"; };
 		B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mandelbrot.cpp; sourceTree = "<group>"; };
 		B4BE8B1A1ACA31F400F25852 /* Mandelbrot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mandelbrot.h; sourceTree = "<group>"; };
+		B4BE8B241ACF842F00F25852 /* easylogging++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easylogging++.h"; sourceTree = "<group>"; };
+		B4CC0A4E1AD7AB9C008217F7 /* color_palettes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = color_palettes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +89,10 @@
 		B4BE8AF71ACA312600F25852 /* FractalBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				B4CC0A4E1AD7AB9C008217F7 /* color_palettes */,
 				B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */,
 				B4BE8B1A1ACA31F400F25852 /* Mandelbrot.h */,
+				B4BE8B241ACF842F00F25852 /* easylogging++.h */,
 				B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */,
 				B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */,
 				B4BE8B011ACA319300F25852 /* CApp_OnInit.cpp */,
@@ -301,6 +307,7 @@
 				B4BE8AFE1ACA312600F25852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

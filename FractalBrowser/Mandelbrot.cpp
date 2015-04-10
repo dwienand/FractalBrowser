@@ -10,6 +10,45 @@
 
 #include "Mandelbrot.h"
 using std::cout;
+using std::endl;
+using std::vector;
+
+vector<unsigned int>* ReadBMP(char* filename)
+{
+    FILE* f = fopen(filename, "rb");
+    
+    if(f == NULL)
+        throw "File not found!";
+    
+    unsigned char info[54];
+    fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+    
+    // extract image height and width from header
+    int width = *(int*)&info[18];
+    int height = *(int*)&info[22];
+    
+    cout << endl;
+    cout << "  Name: " << filename << endl;
+    cout << " Width: " << width << endl;
+    cout << "Height: " << height << endl;
+    
+    int row_padded = (width*3 + 3) & (~3);
+    unsigned char* data = new unsigned char[row_padded];
+    
+    fread(data, sizeof(unsigned char), row_padded, f);
+    
+    vector<unsigned int>* palette = new vector<unsigned int>(0);
+    for(int j = 0; j < width*3; j += 3)
+    {
+        unsigned int color = data[j] | (data[j+1] << 8) | (data[j+2] << 16);
+        palette->push_back(color);
+    }
+    
+    delete data;
+    
+    fclose(f);
+    return palette;
+}
 
 Mandelbrot::Mandelbrot(int width, int height){
     this->width = width;
@@ -23,6 +62,15 @@ Mandelbrot::Mandelbrot(int width, int height){
     
     mandelbrotPixels = new unsigned int[width*height];
     memset(mandelbrotPixels, 0, width*height*sizeof(unsigned int));
+    
+    
+    char* filename ="./color_palettes/test_gradient.bmp";
+    palette = ReadBMP(filename);
+    
+    
+    for (int i = 0; i < palette->size(); i++){
+        cout << (*palette)[i];
+    }
 }
 
 Mandelbrot::~Mandelbrot(){
@@ -52,7 +100,7 @@ void Mandelbrot::render(){
             double y0 = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
             
             //do iteration step
-            while(x*x + y*y < (1 << 16) && iterations < maxIterations){
+            while(x*x + y*y < escapeRadius && iterations < maxIterations){
                 double xtemp = x*x - y*y + x0;
                 y = 2*x*y + y0;
                 x = xtemp;
@@ -64,13 +112,14 @@ void Mandelbrot::render(){
             
             
             
-            //save fractional part for continuous coloring
             if (iterations < maxIterations){
-                double zn = sqrt(x*x+y*y);
-                double nu = (log(zn)/log(2)) / log(2);
-                
-                mandelbrotFloat[py*width+px] = 1 - nu;
+                double sqrxy = x * x + y * y;
+                float modulus = sqrt (x*x + y*y);
+                float mu = iterations - (log (log (modulus)))/ log (2.0);
+                mandelbrotFloat[py*width+px] = mu / maxIterations;
             }
+            else
+                mandelbrotFloat[py*width+px] = 0;
             
         }
         
@@ -78,6 +127,15 @@ void Mandelbrot::render(){
     }
     applyColorFilter();
     
+    /*
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < height; j++){
+            cout << mandelbrotFloat[width*j + i] << ";";
+        }
+        cout << "\n";
+    }
+    
+     */
     long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
                                                                            std::chrono::high_resolution_clock::now().time_since_epoch()
                                                                            ).count();
@@ -140,12 +198,26 @@ inline unsigned int Mandelbrot::blueFilter(unsigned int iterations, double float
     }
 }
 
+unsigned int Mandelbrot::paletteFilter(unsigned int iterations, double floatPart){
+    if (iterations >= maxIterations){
+        return 0;
+    }
+    int idx = iterations % palette->size();
+    unsigned int color = (*palette)[idx];
+    return color;
+
+}
+
 inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, double floatPart){
-    int* palette;
+    int* palette = new int[256];
+    for (int i=0; i < 256; i++) {
+        palette[i] = i;
+    }
     
     if (iterations < maxIterations){
-        unsigned int color1 = palette[(int) floor(iterations)];
-        unsigned int color2 = palette[(int)floor(iterations) + 1];
+        int colorIndex = iterations % 256;
+        unsigned int color1 = palette[colorIndex];
+        unsigned int color2 = palette[colorIndex + 1];
         // iteration % 1 = fractional part of iteration.
         unsigned int color = (unsigned int) (color2 - color1) * floatPart;
         
@@ -245,6 +317,8 @@ void Mandelbrot::reset(){
     lowerImag = initialLowerImag;
     upperImag = initialUpperImag;
 }
+
+
 
 
 

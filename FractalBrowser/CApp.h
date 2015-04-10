@@ -19,8 +19,7 @@
 class CApp {
 private:
     
-    //for some reason gets ignored and turned into true no matter what
-    const bool retinaSupported = true;
+    const bool retinaSupported = false;
     bool Running;
     
     SDL_Window*    window;

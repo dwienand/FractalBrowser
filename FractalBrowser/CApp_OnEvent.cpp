@@ -59,6 +59,7 @@ void CApp::OnEvent(SDL_Event* event) {
                     mandelbrot->reset();
                     mandelbrot->render();
                     break;
+
                     
                 case SDLK_ESCAPE:
                     Running = false;
