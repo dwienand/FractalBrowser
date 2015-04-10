@@ -9,6 +9,7 @@
 #ifndef __FractalBrowser__BMPReader__
 #define __FractalBrowser__BMPReader__
 
-#include <stdio.h>
-
+#include <vector>
+using std::vector;
+vector<unsigned int>* ReadBMP(const char* filename);
 #endif /* defined(__FractalBrowser__BMPReader__) */

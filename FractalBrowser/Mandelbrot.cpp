@@ -10,45 +10,9 @@
 
 #include "Mandelbrot.h"
 using std::cout;
-using std::endl;
 using std::vector;
 
-vector<unsigned int>* ReadBMP(char* filename)
-{
-    FILE* f = fopen(filename, "rb");
-    
-    if(f == NULL)
-        throw "File not found!";
-    
-    unsigned char info[54];
-    fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
-    
-    // extract image height and width from header
-    int width = *(int*)&info[18];
-    int height = *(int*)&info[22];
-    
-    cout << endl;
-    cout << "  Name: " << filename << endl;
-    cout << " Width: " << width << endl;
-    cout << "Height: " << height << endl;
-    
-    int row_padded = (width*3 + 3) & (~3);
-    unsigned char* data = new unsigned char[row_padded];
-    
-    fread(data, sizeof(unsigned char), row_padded, f);
-    
-    vector<unsigned int>* palette = new vector<unsigned int>(0);
-    for(int j = 0; j < width*3; j += 3)
-    {
-        unsigned int color = data[j] | (data[j+1] << 8) | (data[j+2] << 16);
-        palette->push_back(color);
-    }
-    
-    delete data;
-    
-    fclose(f);
-    return palette;
-}
+
 
 Mandelbrot::Mandelbrot(int width, int height){
     this->width = width;
@@ -64,7 +28,7 @@ Mandelbrot::Mandelbrot(int width, int height){
     memset(mandelbrotPixels, 0, width*height*sizeof(unsigned int));
     
     
-    char* filename ="./color_palettes/test_gradient.bmp";
+    const char* filename ="./color_palettes/rainbow.bmp";
     palette = ReadBMP(filename);
     
     
@@ -114,7 +78,7 @@ void Mandelbrot::render(){
             
             if (iterations < maxIterations){
                 double sqrxy = x * x + y * y;
-                float modulus = sqrt (x*x + y*y);
+                float modulus = sqrt (sqrxy);
                 float mu = iterations - (log (log (modulus)))/ log (2.0);
                 mandelbrotFloat[py*width+px] = mu / maxIterations;
             }
@@ -202,7 +166,8 @@ unsigned int Mandelbrot::paletteFilter(unsigned int iterations, double floatPart
     if (iterations >= maxIterations){
         return 0;
     }
-    int idx = iterations % palette->size();
+    double relativePos = log(iterations)/ log(maxIterations);
+    int idx = ( (int) ( (double) palette->size()) * relativePos);
     unsigned int color = (*palette)[idx];
     return color;
 

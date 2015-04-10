@@ -16,6 +16,7 @@
 #include <cmath>
 #include "easylogging++.h"
 #include <vector>
+#include "BMPReader.h"
 
 
 
