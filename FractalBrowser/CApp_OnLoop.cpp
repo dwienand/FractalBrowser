@@ -12,7 +12,6 @@
 #include "CApp.h"
 
 void CApp::OnLoop() {
-    mandelbrot->render();
     SDL_UpdateTexture(texture, NULL, pixels, width * sizeof(Uint32));
     
 }

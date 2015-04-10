@@ -9,13 +9,17 @@
 #include "CApp.h"
 
 bool CApp::OnInit() {
+    
     LOG(INFO) << "Initializing SDL ...";
+    
+    SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
 
-    window = SDL_CreateWindow("Fractal Browser",
-                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_ALLOW_HIGHDPI);
+    window = SDL_CreateWindow("Fractal Browser",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+                              SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);
+    
     renderer = SDL_CreateRenderer(window, -1, 0);
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height);
     

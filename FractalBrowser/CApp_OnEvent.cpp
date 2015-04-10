@@ -23,22 +23,27 @@ void CApp::OnEvent(SDL_Event* event) {
                     
                 case SDLK_LEFT:
                     mandelbrot->moveFrameLeft();
+                    mandelbrot->render();
                     break;
                 case SDLK_RIGHT:
                     mandelbrot->moveFrameRight();
+                    mandelbrot->render();
                     break;
                 case SDLK_UP:
                     mandelbrot->moveFrameUp();
+                    mandelbrot->render();
                     break;
                 case SDLK_DOWN:
                     mandelbrot->moveFrameDown();
+                    mandelbrot->render();
                     break;
-                    
                 case SDLK_SPACE:
                     mandelbrot->zoomIn();
+                    mandelbrot->render();
                     break;
                 case SDLK_v:
                     mandelbrot->zoomOut();
+                    mandelbrot->render();
                     break;
                     
                 case SDLK_q:
