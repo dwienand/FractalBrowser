@@ -26,13 +26,14 @@ bool CApp::OnInit() {
     //create array for rendering into
     pixels = new Uint32[width * height];
     
-    //set it to be all white initially
-    memset(pixels, 255, width * height * sizeof(Uint32));
+    //set it to be all black initially
+    memset(pixels, 0, width * height * sizeof(Uint32));
     
     //create new mandelbrot to render
     mandelbrot = new Mandelbrot(width, height);
     
-    pixels = mandelbrot->render();
+    pixels = mandelbrot->getMandelbrotPixels();
+    mandelbrot->render();
     
     
     return true;

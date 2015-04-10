@@ -13,13 +13,16 @@
 #include <string.h>
 #include <iostream>
 #include <chrono>
+#include <cmath>
 #include "easylogging++.h"
 
 
 class Mandelbrot {
 private:
     int width, height;
-    unsigned int* pixels;
+    unsigned int* mandelbrotInt;
+    double* mandelbrotFloat;
+    unsigned int* mandelbrotPixels;
     
     unsigned int maxIterations = 1000;
     
@@ -45,12 +48,13 @@ private:
     const static unsigned int colorFilterCount = 4;
     unsigned int mapColor(unsigned int iterations);
     
-    unsigned int bwFilter(unsigned int iterations);
-    unsigned int redFilter(unsigned int iterations);
-    unsigned int greenFilter(unsigned int iterations);
-    unsigned int blueFilter(unsigned int iterations);
+    unsigned int bwFilter(unsigned int iterations, double floatPart);
+    unsigned int redFilter(unsigned int iterations, double floatPart);
+    unsigned int greenFilter(unsigned int iterations, double floatPart);
+    unsigned int blueFilter(unsigned int iterations, double floatPart);
+    unsigned int continuousColoring(unsigned int iterations, double floatPart);
     
-    typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int);
+    typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int, double floatPart);
     FunctionPointer colorFilters[colorFilterCount] = {
         &Mandelbrot::bwFilter,
         &Mandelbrot::redFilter,
@@ -61,8 +65,10 @@ private:
     
 public:
     Mandelbrot(int width, int height);
+    ~Mandelbrot();
     
-    unsigned int* render();
+    void render();
+    void applyColorFilter();
     
     void moveFrameUp();
     void moveFrameDown();
@@ -73,6 +79,8 @@ public:
     
     void rotateColorFilterLeft();
     void rotateColorFilterRight();
+    
+    unsigned int* getMandelbrotPixels(){return this->mandelbrotPixels;};
     
 };
 
