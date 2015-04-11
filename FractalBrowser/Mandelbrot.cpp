@@ -41,7 +41,7 @@ Mandelbrot::~Mandelbrot(){
 
 
 void Mandelbrot::render(){
-    LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
+    //LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
     
     long startTime = std::chrono::duration_cast< std::chrono::milliseconds >(
                                                                              std::chrono::high_resolution_clock::now().time_since_epoch()
@@ -101,7 +101,7 @@ void Mandelbrot::render(){
                                                                            std::chrono::high_resolution_clock::now().time_since_epoch()
                                                                            ).count();
     long runTime = endTime - startTime;
-    LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
+    //LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
     
 }
 
@@ -188,13 +188,13 @@ void Mandelbrot::rotateColorFilterLeft(){
         colorFilterIndex = colorFilterCount - 1;
     else
         colorFilterIndex--;
-    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+    //LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
 }
 
 void Mandelbrot::rotateColorFilterRight(){
     colorFilterIndex = (colorFilterIndex + 1) % colorFilterCount;
     
-    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+    //LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
 }
 
 

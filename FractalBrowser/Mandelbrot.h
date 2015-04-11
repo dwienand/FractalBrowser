@@ -14,7 +14,7 @@
 #include <iostream>
 #include <chrono>
 #include <cmath>
-#include "easylogging++.h"
+//#include "easylogging++.h"
 #include <vector>
 #include "BMPReader.h"
 

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94C7AE251AD8BC690061561E /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C7AE231AD8BC690061561E /* gtest.framework */; };
+		94C7AE2A1AD8C0A70061561E /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
+		94C7AE2B1AD8C0A70061561E /* Mandelbrot.h in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B1A1ACA31F400F25852 /* Mandelbrot.h */; };
+		94C7AE2D1AD8C0C20061561E /* BMPReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250C1AD888B400B1E04B /* BMPReader.cpp */; };
+		94C7AE2E1AD8C0C20061561E /* BMPReader.h in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250D1AD888B400B1E04B /* BMPReader.h */; };
+		94C7AE2F1AD8C79D0061561E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C7AE1E1AD8BBE50061561E /* main.cpp */; };
+		94C7AE301AD8C79D0061561E /* Tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94C7AE261AD8BCD90061561E /* Tests.cpp */; };
 		B4BE8B061ACA319300F25852 /* CApp_OnCleanup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */; };
 		B4BE8B071ACA319300F25852 /* CApp_OnEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */; };
 		B4BE8B081ACA319300F25852 /* CApp_OnInit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B011ACA319300F25852 /* CApp_OnInit.cpp */; };
@@ -16,11 +23,19 @@
 		B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE8B151ACA31AE00F25852 /* SDL2.framework */; };
 		B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
 		B4C6250E1AD888B400B1E04B /* BMPReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250C1AD888B400B1E04B /* BMPReader.cpp */; };
-		B4C625111AD8AC1000B1E04B /* ColorSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */; };
 		B4CC0A4F1AD7ABA3008217F7 /* color_palettes in CopyFiles */ = {isa = PBXBuildFile; fileRef = B4CC0A4E1AD7AB9C008217F7 /* color_palettes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		94C7AE1A1AD8BBE50061561E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		B4BE8AF31ACA312600F25852 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -34,6 +49,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		94C7AE1C1AD8BBE50061561E /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		94C7AE1E1AD8BBE50061561E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		94C7AE231AD8BC690061561E /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = "../../Users/grivan/Library/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug/gtest.framework"; sourceTree = "<group>"; };
+		94C7AE261AD8BCD90061561E /* Tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tests.cpp; path = ../FractalBrowser/Tests.cpp; sourceTree = "<group>"; };
+		94C7AE271AD8BCD90061561E /* Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tests.h; path = ../FractalBrowser/Tests.h; sourceTree = "<group>"; };
 		B4BE8AF51ACA312600F25852 /* FractalBrowser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FractalBrowser; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4BE8AFF1ACA319300F25852 /* CApp_OnCleanup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnCleanup.cpp; sourceTree = "<group>"; };
 		B4BE8B001ACA319300F25852 /* CApp_OnEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CApp_OnEvent.cpp; sourceTree = "<group>"; };
@@ -58,12 +78,18 @@
 		B4BE8B241ACF842F00F25852 /* easylogging++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easylogging++.h"; sourceTree = "<group>"; };
 		B4C6250C1AD888B400B1E04B /* BMPReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMPReader.cpp; sourceTree = "<group>"; };
 		B4C6250D1AD888B400B1E04B /* BMPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPReader.h; sourceTree = "<group>"; };
-		B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorSpace.cpp; sourceTree = "<group>"; };
-		B4C625101AD8AC1000B1E04B /* ColorSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSpace.h; sourceTree = "<group>"; };
 		B4CC0A4E1AD7AB9C008217F7 /* color_palettes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = color_palettes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		94C7AE191AD8BBE50061561E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94C7AE251AD8BC690061561E /* gtest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4BE8AF21ACA312600F25852 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,9 +101,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94C7AE1D1AD8BBE50061561E /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				94C7AE1E1AD8BBE50061561E /* main.cpp */,
+				94C7AE261AD8BCD90061561E /* Tests.cpp */,
+				94C7AE271AD8BCD90061561E /* Tests.h */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 		B4BE8AEC1ACA312600F25852 = {
 			isa = PBXGroup;
 			children = (
+				94C7AE1D1AD8BBE50061561E /* UnitTests */,
 				B4BE8B0C1ACA31AE00F25852 /* Frameworks */,
 				B4BE8AF71ACA312600F25852 /* FractalBrowser */,
 				B4BE8AF61ACA312600F25852 /* Products */,
@@ -88,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				B4BE8AF51ACA312600F25852 /* FractalBrowser */,
+				94C7AE1C1AD8BBE50061561E /* UnitTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,8 +146,6 @@
 				B4BE8B051ACA319300F25852 /* CApp.h */,
 				B4C6250C1AD888B400B1E04B /* BMPReader.cpp */,
 				B4C6250D1AD888B400B1E04B /* BMPReader.h */,
-				B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */,
-				B4C625101AD8AC1000B1E04B /* ColorSpace.h */,
 			);
 			path = FractalBrowser;
 			sourceTree = "<group>";
@@ -117,6 +153,7 @@
 		B4BE8B0C1ACA31AE00F25852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94C7AE231AD8BC690061561E /* gtest.framework */,
 				B4BE8B0D1ACA31AE00F25852 /* AEProfiling.framework */,
 				B4BE8B0E1ACA31AE00F25852 /* AERegistration.framework */,
 				B4BE8B0F1ACA31AE00F25852 /* AudioMixEngine.framework */,
@@ -136,6 +173,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		94C7AE1B1AD8BBE50061561E /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94C7AE201AD8BBE50061561E /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				94C7AE181AD8BBE50061561E /* Sources */,
+				94C7AE191AD8BBE50061561E /* Frameworks */,
+				94C7AE1A1AD8BBE50061561E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 94C7AE1C1AD8BBE50061561E /* UnitTests */;
+			productType = "com.apple.product-type.tool";
+		};
 		B4BE8AF41ACA312600F25852 /* FractalBrowser */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4BE8AFC1ACA312600F25852 /* Build configuration list for PBXNativeTarget "FractalBrowser" */;
@@ -162,6 +216,9 @@
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = Team060;
 				TargetAttributes = {
+					94C7AE1B1AD8BBE50061561E = {
+						CreatedOnToolsVersion = 6.0;
+					};
 					B4BE8AF41ACA312600F25852 = {
 						CreatedOnToolsVersion = 6.2;
 					};
@@ -180,11 +237,25 @@
 			projectRoot = "";
 			targets = (
 				B4BE8AF41ACA312600F25852 /* FractalBrowser */,
+				94C7AE1B1AD8BBE50061561E /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		94C7AE181AD8BBE50061561E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94C7AE2F1AD8C79D0061561E /* main.cpp in Sources */,
+				94C7AE301AD8C79D0061561E /* Tests.cpp in Sources */,
+				94C7AE2D1AD8C0C20061561E /* BMPReader.cpp in Sources */,
+				94C7AE2E1AD8C0C20061561E /* BMPReader.h in Sources */,
+				94C7AE2A1AD8C0A70061561E /* Mandelbrot.cpp in Sources */,
+				94C7AE2B1AD8C0A70061561E /* Mandelbrot.h in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4BE8AF11ACA312600F25852 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -193,7 +264,6 @@
 				B4BE8B061ACA319300F25852 /* CApp_OnCleanup.cpp in Sources */,
 				B4BE8B0A1ACA319300F25852 /* CApp_OnRender.cpp in Sources */,
 				B4BE8B071ACA319300F25852 /* CApp_OnEvent.cpp in Sources */,
-				B4C625111AD8AC1000B1E04B /* ColorSpace.cpp in Sources */,
 				B4BE8B0B1ACA319300F25852 /* CApp.cpp in Sources */,
 				B4BE8B091ACA319300F25852 /* CApp_OnLoop.cpp in Sources */,
 				B4BE8B081ACA319300F25852 /* CApp_OnInit.cpp in Sources */,
@@ -204,6 +274,35 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		94C7AE211AD8BBE50061561E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		94C7AE221AD8BBE50061561E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		B4BE8AFA1ACA312600F25852 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -284,6 +383,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -296,6 +396,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -305,6 +406,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		94C7AE201AD8BBE50061561E /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94C7AE211AD8BBE50061561E /* Debug */,
+				94C7AE221AD8BBE50061561E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B4BE8AF01ACA312600F25852 /* Build configuration list for PBXProject "FractalBrowser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
