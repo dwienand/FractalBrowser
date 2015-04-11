@@ -31,10 +31,6 @@ Mandelbrot::Mandelbrot(int width, int height){
     const char* filename ="./color_palettes/rainbow.bmp";
     palette = ReadBMP(filename);
     
-    
-    for (int i = 0; i < palette->size(); i++){
-        cout << (*palette)[i];
-    }
 }
 
 Mandelbrot::~Mandelbrot(){
@@ -56,18 +52,18 @@ void Mandelbrot::render(){
     for(int px = 0; px < width; px++){
         for(int py = 0; py < height; py++){
             int iterations = 0;
-            double x = 0.0;
-            double y = 0.0;
+            double ZReal = 0.0;
+            double ZImag = 0.0;
             //convert pixel x coordinate to coordinate on real axis of complex plane
-            double x0 = leftReal + ((double) px) / ((double) width) * (rightReal-leftReal);
+            double CReal = leftReal + ((double) px) / ((double) width) * (rightReal-leftReal);
             //convert pixel y coordinate to coordinate on imaginary axis of complex plane
-            double y0 = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
+            double CImag = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
             
             //do iteration step
-            while(x*x + y*y < escapeRadius && iterations < maxIterations){
-                double xtemp = x*x - y*y + x0;
-                y = 2*x*y + y0;
-                x = xtemp;
+            while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
+                double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
+                ZImag = 2*ZReal*ZImag + CImag;
+                ZReal = ZRealTemp;
                 iterations++;
             }
             
@@ -77,10 +73,10 @@ void Mandelbrot::render(){
             
             
             if (iterations < maxIterations){
-                double sqrxy = x * x + y * y;
-                float modulus = sqrt (sqrxy);
-                float mu = iterations - (log (log (modulus)))/ log (2.0);
-                mandelbrotFloat[py*width+px] = mu / maxIterations;
+                
+                double modulus = sqrt (ZReal * ZReal + ZImag * ZImag);
+                double nu = log(log(modulus)/log(2))/log(2);
+                mandelbrotFloat[py*width+px] = iterations + 1 - nu;
             }
             else
                 mandelbrotFloat[py*width+px] = 0;
@@ -91,15 +87,15 @@ void Mandelbrot::render(){
     }
     applyColorFilter();
     
-    /*
+    
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
-            cout << mandelbrotFloat[width*j + i] << ";";
+        //    cout << mandelbrotFloat[width*j + i] << ";";
         }
-        cout << "\n";
+        //cout << "\n";
     }
     
-     */
+     
     long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
                                                                            std::chrono::high_resolution_clock::now().time_since_epoch()
                                                                            ).count();
@@ -174,19 +170,15 @@ unsigned int Mandelbrot::paletteFilter(unsigned int iterations, double floatPart
 }
 
 inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, double floatPart){
-    int* palette = new int[256];
-    for (int i=0; i < 256; i++) {
-        palette[i] = i;
-    }
+    
     
     if (iterations < maxIterations){
-        int colorIndex = iterations % 256;
-        unsigned int color1 = palette[colorIndex];
-        unsigned int color2 = palette[colorIndex + 1];
-        // iteration % 1 = fractional part of iteration.
-        unsigned int color = (unsigned int) (color2 - color1) * floatPart;
+        int colorIndex = iterations % palette->size();
+        unsigned int color1 = (*palette)[colorIndex];
+        unsigned int color2 = (*palette)[colorIndex + 1];
         
-        return color;
+        
+        return color1;
     }
     return 0;
     
