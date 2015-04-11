@@ -12,14 +12,13 @@
 
 #include <SDL2/SDL.h>
 #include "Mandelbrot.h"
-
 #include "easylogging++.h"
 
 
 class CApp {
 private:
     
-    const bool retinaSupported = false;
+    const bool retinaSupported = true;
     bool Running;
     
     SDL_Window*    window;
@@ -29,7 +28,7 @@ private:
     
     SDL_Texture* texture;
     
-    int width = 800, height=600;
+    int width = 1200, height=800;
     
     Uint32 * pixels;
     

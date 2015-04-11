@@ -28,7 +28,7 @@ Mandelbrot::Mandelbrot(int width, int height){
     memset(mandelbrotPixels, 0, width*height*sizeof(unsigned int));
     
     
-    const char* filename ="./color_palettes/rainbow.bmp";
+    const char* filename ="./color_palettes/test_gradient.bmp";
     palette = ReadBMP(filename);
     
 }
@@ -79,7 +79,7 @@ void Mandelbrot::render(){
                 mandelbrotFloat[py*width+px] = iterations + 1 - nu;
             }
             else
-                mandelbrotFloat[py*width+px] = 0;
+                mandelbrotFloat[py*width+px] = maxIterations;
             
         }
         
@@ -90,7 +90,8 @@ void Mandelbrot::render(){
     
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
-        //    cout << mandelbrotFloat[width*j + i] << ";";
+            //printf("%.2f;", mandelbrotInt[width*j + i]);
+            //cout <<mandelbrotInt[width*j + i] << ";";
         }
         //cout << "\n";
     }
@@ -160,7 +161,7 @@ inline unsigned int Mandelbrot::blueFilter(unsigned int iterations, double float
 
 unsigned int Mandelbrot::paletteFilter(unsigned int iterations, double floatPart){
     if (iterations >= maxIterations){
-        return 0;
+        return 0xffff00;
     }
     double relativePos = log(iterations)/ log(maxIterations);
     int idx = ( (int) ( (double) palette->size()) * relativePos);
@@ -171,16 +172,14 @@ unsigned int Mandelbrot::paletteFilter(unsigned int iterations, double floatPart
 
 inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, double floatPart){
     
-    
-    if (iterations < maxIterations){
-        int colorIndex = iterations % palette->size();
-        unsigned int color1 = (*palette)[colorIndex];
-        unsigned int color2 = (*palette)[colorIndex + 1];
-        
-        
-        return color1;
+    if (floatPart >= maxIterations){
+        return 0xffff00;
     }
-    return 0;
+    double relativePos = log(floatPart)/ log(maxIterations);
+    int idx = ( (int) ( (double) palette->size()) * relativePos);
+    unsigned int color = (*palette)[idx];
+    return color;
+
     
 }
 

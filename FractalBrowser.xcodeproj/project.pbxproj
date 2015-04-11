@@ -16,6 +16,7 @@
 		B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE8B151ACA31AE00F25852 /* SDL2.framework */; };
 		B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
 		B4C6250E1AD888B400B1E04B /* BMPReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250C1AD888B400B1E04B /* BMPReader.cpp */; };
+		B4C625111AD8AC1000B1E04B /* ColorSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */; };
 		B4CC0A4F1AD7ABA3008217F7 /* color_palettes in CopyFiles */ = {isa = PBXBuildFile; fileRef = B4CC0A4E1AD7AB9C008217F7 /* color_palettes */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,8 @@
 		B4BE8B241ACF842F00F25852 /* easylogging++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easylogging++.h"; sourceTree = "<group>"; };
 		B4C6250C1AD888B400B1E04B /* BMPReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMPReader.cpp; sourceTree = "<group>"; };
 		B4C6250D1AD888B400B1E04B /* BMPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPReader.h; sourceTree = "<group>"; };
+		B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorSpace.cpp; sourceTree = "<group>"; };
+		B4C625101AD8AC1000B1E04B /* ColorSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSpace.h; sourceTree = "<group>"; };
 		B4CC0A4E1AD7AB9C008217F7 /* color_palettes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = color_palettes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +108,8 @@
 				B4BE8B051ACA319300F25852 /* CApp.h */,
 				B4C6250C1AD888B400B1E04B /* BMPReader.cpp */,
 				B4C6250D1AD888B400B1E04B /* BMPReader.h */,
+				B4C6250F1AD8AC1000B1E04B /* ColorSpace.cpp */,
+				B4C625101AD8AC1000B1E04B /* ColorSpace.h */,
 			);
 			path = FractalBrowser;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				B4BE8B061ACA319300F25852 /* CApp_OnCleanup.cpp in Sources */,
 				B4BE8B0A1ACA319300F25852 /* CApp_OnRender.cpp in Sources */,
 				B4BE8B071ACA319300F25852 /* CApp_OnEvent.cpp in Sources */,
+				B4C625111AD8AC1000B1E04B /* ColorSpace.cpp in Sources */,
 				B4BE8B0B1ACA319300F25852 /* CApp.cpp in Sources */,
 				B4BE8B091ACA319300F25852 /* CApp_OnLoop.cpp in Sources */,
 				B4BE8B081ACA319300F25852 /* CApp_OnInit.cpp in Sources */,
