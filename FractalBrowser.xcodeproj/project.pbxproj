@@ -23,6 +23,7 @@
 		B4BE8B181ACA31CD00F25852 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE8B151ACA31AE00F25852 /* SDL2.framework */; };
 		B4BE8B1B1ACA31F400F25852 /* Mandelbrot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4BE8B191ACA31F400F25852 /* Mandelbrot.cpp */; };
 		B4C6250E1AD888B400B1E04B /* BMPReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C6250C1AD888B400B1E04B /* BMPReader.cpp */; };
+		B4C625181AD8CBA300B1E04B /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C625171AD8CBA300B1E04B /* gtest.framework */; };
 		B4CC0A4F1AD7ABA3008217F7 /* color_palettes in CopyFiles */ = {isa = PBXBuildFile; fileRef = B4CC0A4E1AD7AB9C008217F7 /* color_palettes */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		B4BE8B241ACF842F00F25852 /* easylogging++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easylogging++.h"; sourceTree = "<group>"; };
 		B4C6250C1AD888B400B1E04B /* BMPReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BMPReader.cpp; sourceTree = "<group>"; };
 		B4C6250D1AD888B400B1E04B /* BMPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPReader.h; sourceTree = "<group>"; };
+		B4C625171AD8CBA300B1E04B /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = "../../Users/dominik/Library/Developer/Xcode/DerivedData/gtest-ftzmftoxzswrwwbyskzvsrielacf/Build/Products/Debug/gtest.framework"; sourceTree = "<group>"; };
 		B4CC0A4E1AD7AB9C008217F7 /* color_palettes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = color_palettes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4C625181AD8CBA300B1E04B /* gtest.framework in Frameworks */,
 				94C7AE251AD8BC690061561E /* gtest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +156,7 @@
 		B4BE8B0C1ACA31AE00F25852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4C625171AD8CBA300B1E04B /* gtest.framework */,
 				94C7AE231AD8BC690061561E /* gtest.framework */,
 				B4BE8B0D1ACA31AE00F25852 /* AEProfiling.framework */,
 				B4BE8B0E1ACA31AE00F25852 /* AERegistration.framework */,
@@ -280,6 +284,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-ftzmftoxzswrwwbyskzvsrielacf/Build/Products/Debug",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -297,6 +302,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-fyqkzcephdouxjahphkqovzqppjp/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/gtest-ftzmftoxzswrwwbyskzvsrielacf/Build/Products/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
