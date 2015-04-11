@@ -275,6 +275,14 @@ void Mandelbrot::reset(){
 }
 
 
+void Mandelbrot::setDimensions(double leftReal, double rightReal, double lowerImag, double upperImag){
+    this->leftReal = leftReal;
+    this->rightReal = rightReal;
+    this->lowerImag = lowerImag;
+    this->upperImag = upperImag;
+}
+
+
 
 
 

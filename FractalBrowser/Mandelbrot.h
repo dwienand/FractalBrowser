@@ -93,6 +93,8 @@ public:
     void zoomOut();
     void reset();
     
+    void setDimensions(double leftReal, double rightReal, double lowerImag, double upperImag);
+    
     void rotateColorFilterLeft();
     void rotateColorFilterRight();
     
