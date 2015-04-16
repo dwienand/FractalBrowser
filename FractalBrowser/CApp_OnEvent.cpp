@@ -11,6 +11,8 @@
 #include "CApp.h"
 
 void CApp::OnEvent(SDL_Event* event) {
+    SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_IGNORE);
+    SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
     switch (event->type)
     {
         case SDL_MOUSEBUTTONUP:
@@ -55,6 +57,13 @@ void CApp::OnEvent(SDL_Event* event) {
                     mandelbrot->applyColorFilter();
                     break;
                     
+                case SDLK_i:
+                    mandelbrot->doubleIterations();
+                    break;
+                case SDLK_d:
+                    mandelbrot->halfIterations();
+                    break;
+                    
                 case SDLK_r:
                     mandelbrot->reset();
                     mandelbrot->render();
@@ -74,5 +83,9 @@ void CApp::OnEvent(SDL_Event* event) {
             Running = false;
             break;
     }
+    
+    SDL_EventState(SDL_MOUSEBUTTONDOWN, SDL_ENABLE);
+    SDL_EventState(SDL_KEYDOWN, SDL_ENABLE);
+
     
 }

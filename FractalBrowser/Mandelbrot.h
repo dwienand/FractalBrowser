@@ -14,9 +14,10 @@
 #include <iostream>
 #include <chrono>
 #include <cmath>
-//#include "easylogging++.h"
+#include "easylogging++.h"
 #include <vector>
 #include "BMPReader.h"
+#include <libiomp/omp.h>
 
 
 
@@ -30,7 +31,7 @@ private:
     
     std::vector<unsigned int>* palette;
     
-    unsigned int maxIterations = 1000;
+    unsigned int maxIterations = 50;
     const double escapeRadius = 20.0;
     
     //color constants
@@ -97,6 +98,9 @@ public:
     
     void rotateColorFilterLeft();
     void rotateColorFilterRight();
+    
+    void doubleIterations();
+    void halfIterations();
     
     unsigned int* getMandelbrotPixels(){return this->mandelbrotPixels;};
     

@@ -41,13 +41,17 @@ Mandelbrot::~Mandelbrot(){
 
 
 void Mandelbrot::render(){
-    //LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
+    LOG(INFO) << "Rendering Mandelbrot with coordinates real left: " << leftReal << ", real right: " << rightReal << ", imaginary lower: " << lowerImag << ", imaginary upper: " << upperImag << "\n" ;
     
     long startTime = std::chrono::duration_cast< std::chrono::milliseconds >(
                                                                              std::chrono::high_resolution_clock::now().time_since_epoch()
                                                                              ).count();
     memset(mandelbrotInt, 0, width * height * sizeof(unsigned int));
     
+    omp_set_dynamic(0);
+    omp_set_num_threads(4);
+    #pragma omp parallel
+    printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
     
     for(int px = 0; px < width; px++){
         for(int py = 0; py < height; py++){
@@ -101,7 +105,7 @@ void Mandelbrot::render(){
                                                                            std::chrono::high_resolution_clock::now().time_since_epoch()
                                                                            ).count();
     long runTime = endTime - startTime;
-    //LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
+    LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
     
 }
 
@@ -188,13 +192,13 @@ void Mandelbrot::rotateColorFilterLeft(){
         colorFilterIndex = colorFilterCount - 1;
     else
         colorFilterIndex--;
-    //LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
 }
 
 void Mandelbrot::rotateColorFilterRight(){
     colorFilterIndex = (colorFilterIndex + 1) % colorFilterCount;
     
-    //LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
+    LOG(INFO) << "Switched color filter to #" << colorFilterIndex;
 }
 
 
@@ -280,6 +284,20 @@ void Mandelbrot::setDimensions(double leftReal, double rightReal, double lowerIm
     this->rightReal = rightReal;
     this->lowerImag = lowerImag;
     this->upperImag = upperImag;
+}
+
+void Mandelbrot::doubleIterations(){
+    if(this->maxIterations * 2 > this->maxIterations)
+        this->maxIterations *= 2;
+    LOG(INFO) << "Increased number of iteration to " << this->maxIterations << "\n";
+}
+
+void Mandelbrot::halfIterations(){
+    this->maxIterations /= 2;
+    if (this->maxIterations == 0)
+        this->maxIterations = 1;
+    LOG(INFO) << "Decreased number of iteration to " << this->maxIterations << "\n";
+    
 }
 
 
