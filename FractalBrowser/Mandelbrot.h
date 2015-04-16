@@ -17,7 +17,6 @@
 #include "easylogging++.h"
 #include <vector>
 #include "BMPReader.h"
-#include <libiomp/omp.h>
 
 
 
