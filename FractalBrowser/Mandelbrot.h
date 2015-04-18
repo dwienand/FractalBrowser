@@ -60,7 +60,7 @@ private:
     // variables for managing color filters
     // to include a new filter, add it to the colorFilters array and increment colorFilterCount accordingly
     unsigned int colorFilterIndex = 1;
-    const static unsigned int colorFilterCount = 6;
+    const static unsigned int colorFilterCount = 7;
     unsigned int mapColor(unsigned int iterations);
     
     unsigned int bwFilter(unsigned int iterations, double floatPart);
@@ -69,6 +69,7 @@ private:
     unsigned int blueFilter(unsigned int iterations, double floatPart);
     unsigned int continuousColoring(unsigned int iterations, double floatPart);
     unsigned int paletteFilter(unsigned int iterations, double floatPart);
+    unsigned int cyclicColoring(unsigned int iterations, double floatPart);
     
     typedef unsigned int(Mandelbrot::*FunctionPointer)(unsigned int, double floatPart);
     FunctionPointer colorFilters[colorFilterCount] = {
@@ -77,7 +78,8 @@ private:
         &Mandelbrot::greenFilter,
         &Mandelbrot::blueFilter,
         &Mandelbrot::continuousColoring,
-        &Mandelbrot::paletteFilter
+        &Mandelbrot::paletteFilter,
+        &Mandelbrot::cyclicColoring
     };
     
     

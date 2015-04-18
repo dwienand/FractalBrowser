@@ -212,6 +212,19 @@ inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, doub
     
 }
 
+
+inline unsigned int Mandelbrot::cyclicColoring(unsigned int iterations, double floatPart){
+    
+    if (floatPart >= maxIterations){
+        return 0x0;
+    }
+    int idx = (int) round(floatPart);
+    unsigned int color = (*palette)[idx];
+    return color;
+    
+    
+}
+
 void Mandelbrot::rotateColorFilterLeft(){
     if (colorFilterIndex == 0)
         colorFilterIndex = colorFilterCount - 1;
