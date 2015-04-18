@@ -17,11 +17,14 @@
 #include "easylogging++.h"
 #include <vector>
 #include "BMPReader.h"
+#include <thread>
 
 
 
 class Mandelbrot {
 private:
+    
+    int numThreads = 1;
     int width, height;
     unsigned int* mandelbrotInt;
     double* mandelbrotFloat;
@@ -30,7 +33,7 @@ private:
     
     std::vector<unsigned int>* palette;
     
-    unsigned int maxIterations = 50;
+    unsigned int maxIterations = 1000;
     const double escapeRadius = 20.0;
     
     //color constants
@@ -76,6 +79,11 @@ private:
         &Mandelbrot::continuousColoring,
         &Mandelbrot::paletteFilter
     };
+    
+    
+    void* calculateMandelbrotColThread(int x);
+    void calculateMandelbrotMultithreaded();
+    void calculateMandelbrotPoint(int px, int py);
     
     
 public:
