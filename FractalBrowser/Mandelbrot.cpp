@@ -55,19 +55,11 @@ void Mandelbrot::calculateMandelbrotMultithreaded(){
 }
 
 void* Mandelbrot::calculateMandelbrotColThread(int threadID){
-    int chunkSize = width/ numThreads;
-    for(int px = chunkSize * threadID; px < (chunkSize*(threadID + 1)); px++)
+    for(int px = threadID; px < width; px+=numThreads)
         for(int py = 0; py < height; py++){
             calculateMandelbrotPoint(px, py);
             
         }
-    
-    if(threadID == 0){
-        for(int px = chunkSize * numThreads; px < width; px++)
-            for(int py = 0; py < height; py++){
-                calculateMandelbrotPoint(px, py);
-            }
-    }
     
     return NULL;
     
