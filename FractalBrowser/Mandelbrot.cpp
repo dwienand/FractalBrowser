@@ -78,8 +78,17 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     //do iteration step
     while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
         double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
-        ZImag = 2*ZReal*ZImag + CImag;
+        double ZImagTemp = 2*ZReal*ZImag + CImag;
+        
+        //check for periodicity
+        if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
+        {
+            iterations = maxIterations;
+            break;
+        }
+        
         ZReal = ZRealTemp;
+        ZImag = ZImagTemp;
         iterations++;
     }
     
@@ -113,29 +122,9 @@ void Mandelbrot::render(){
                                                                              ).count();
     memset(mandelbrotInt, 0, width * height * sizeof(unsigned int));
     
-    /*
-    
-    for(int px = 0; px < width; px++){
-        for(int py = 0; py < height; py++){
-            calculateMandelbrotPoint(px, py);
-        }
-        
-    }
-     
-     */
     
     calculateMandelbrotMultithreaded();
     applyColorFilter();
-    
-    
-    for(int i = 0; i < width; i++){
-        for(int j = 0; j < height; j++){
-            //printf("%.2f;", mandelbrotInt[width*j + i]);
-            //cout <<mandelbrotInt[width*j + i] << ";";
-        }
-        //cout << "\n";
-    }
-    
     
     long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
                                                                            std::chrono::high_resolution_clock::now().time_since_epoch()

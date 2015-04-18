@@ -18,7 +18,7 @@
 #include <vector>
 #include "BMPReader.h"
 #include <thread>
-
+#include <x86intrin.h>
 
 
 class Mandelbrot {
