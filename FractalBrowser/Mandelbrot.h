@@ -26,7 +26,7 @@ bool period2BulbTest(double real, double imag);
 class Mandelbrot {
 private:
     
-    int numThreads = 1;
+    int numThreads = 8;
     int width, height;
     unsigned int* mandelbrotInt;
     double* mandelbrotFloat;
