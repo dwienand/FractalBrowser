@@ -75,22 +75,30 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     //convert pixel y coordinate to coordinate on imaginary axis of complex plane
     double CImag = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
     
-    //do iteration step
-    while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
-        double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
-        double ZImagTemp = 2*ZReal*ZImag + CImag;
-        
-        //check for periodicity
-        if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
-        {
-            iterations = maxIterations;
-            break;
-        }
-        
-        ZReal = ZRealTemp;
-        ZImag = ZImagTemp;
-        iterations++;
+    bool skipIteration = false;
+    
+    if (cardioidTest(CReal, CImag) || period2BulbTest(CReal, CImag)){
+        iterations = maxIterations;
+        skipIteration = true;
     }
+    
+    //do iteration step
+    if (!skipIteration)
+        while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
+            double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
+            double ZImagTemp = 2*ZReal*ZImag + CImag;
+            
+            //check for periodicity
+            if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
+            {
+                iterations = maxIterations;
+                break;
+            }
+            
+            ZReal = ZRealTemp;
+            ZImag = ZImagTemp;
+            iterations++;
+        }
     
     //save raw iteration count
     mandelbrotInt[py*width+px] = iterations;
@@ -106,7 +114,7 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     else
         mandelbrotFloat[py*width+px] = maxIterations;
     
-
+    
 }
 
 
@@ -336,6 +344,20 @@ void Mandelbrot::halfIterations(){
         this->maxIterations = 1;
     LOG(INFO) << "Decreased number of iteration to " << this->maxIterations << "\n";
     
+}
+
+bool cardioidTest(double real, double imag){
+    double q = (real - 0.25)*(real - 0.25) + imag*imag;
+    bool res = q*(q+(real - 0.25)) < 0.25*imag*imag;
+    
+    return res;
+}
+
+
+bool period2BulbTest(double real, double imag){
+    bool res = (real+1)*(real+1)+imag*imag < 1.0/16.0;
+    
+    return res;
 }
 
 

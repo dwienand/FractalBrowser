@@ -20,6 +20,8 @@
 #include <thread>
 #include <x86intrin.h>
 
+bool cardioidTest(double real, double imag);
+bool period2BulbTest(double real, double imag);
 
 class Mandelbrot {
 private:
