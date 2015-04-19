@@ -67,20 +67,36 @@ void* Mandelbrot::calculateMandelbrotColThread(int threadID){
 
 
 inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
+    
+    
+    
     int iterations = 0;
     double ZReal = 0.0;
     double ZImag = 0.0;
     //convert pixel x coordinate to coordinate on real axis of complex plane
     double CReal = leftReal + ((double) px) / ((double) width) * (rightReal-leftReal);
     //convert pixel y coordinate to coordinate on imaginary axis of complex plane
-    double CImag = lowerImag + ((double)py) / ((double) height) * (upperImag - lowerImag);
+    double CImag = upperImag - ((double)py) / ((double) height) * (upperImag - lowerImag);
     
     bool skipIteration = false;
     
+    //we know the fractal has a main cardioid and a period 2 bulb
+    // that we can just set to max iteration right away
     if (cardioidTest(CReal, CImag) || period2BulbTest(CReal, CImag)){
         iterations = maxIterations;
         skipIteration = true;
     }
+    
+    // check symmetry
+    // assume we're rendering from top to bottom
+    if (CImag < 0 && -CImag < upperImag){
+        //find mirrored py value
+        int mirroredPy = mirrorPy(py);
+        //cout << "Original CImag: " << CImag << ", original py: " << py << ", mirrored py: " << py_mirrored << "\n";
+        iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
+        skipIteration = true;
+    }
+    
     
     //do iteration step
     if (!skipIteration)
@@ -360,7 +376,14 @@ bool period2BulbTest(double real, double imag){
     return res;
 }
 
-
+inline int Mandelbrot::mirrorPy(int py){
+    int zeroPos = upperImag/(upperImag - lowerImag) * height;
+    
+    int offset = py - zeroPos;
+    
+    
+    return zeroPos - offset ;
+}
 
 
 
