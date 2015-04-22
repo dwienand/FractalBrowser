@@ -310,8 +310,40 @@ void Mandelbrot::moveFrameLeft(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
     
+    int pixelSteps = moveSpeed * width;
+
+    //
+    
+    Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
+    newSlice->setDimensions(leftReal - stepSize, leftReal, lowerImag, upperImag);
+    newSlice->render();
+    
+    for(int i = 0; i < width; i++){
+        for (int j = 0; j < height; j++) {
+            if(i >= pixelSteps){
+                mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[j * width + i - pixelSteps];
+                mandelbrotIntTemp[j*width + i] = mandelbrotInt[j* width+ i - pixelSteps];
+                mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[j* width+ i - pixelSteps];
+            }
+            else{
+                mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width + i ];
+                mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width + i ];
+                mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width + i ];
+            }
+        }
+    }
+    
+    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+    std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
+    std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
+    
+    delete newSlice;
+    
+    
     leftReal -= stepSize;
     rightReal -= stepSize;
+    
+    canReuseFrame = true;
     
     
 }
@@ -340,40 +372,6 @@ void Mandelbrot::moveFrameRight(){
             }
         }
     }
-    /*
-     
-     for (int i = 0; i < pixelSteps; i++) {
-     for (int j = 0; j < height; j++) {
-     cout << newSlice->mandelbrotInt[i*width + j] << ";";
-     }
-     cout << "\n";
-     }
-     
-     for (int i = 0; i < width; i++){
-     cout << "==";
-     }
-     cout << "\n"   ;
-     
-     for (int i = 0; i < width; i++) {
-     for (int j = 0; j < height; j++) {
-     cout << mandelbrotInt[i*width + j] << ";";
-     }
-     cout << "\n";
-     }
-     
-     for (int i = 0; i < width; i++){
-     cout << "==";
-     }
-     cout << "\n"   ;
-     
-     for (int i = 0; i < width; i++) {
-     for (int j = 0; j < height; j++) {
-     cout << mandelbrotIntTemp[i*width + j] << ";";
-     }
-     cout << "\n";
-     }
-     
-     */
     
     std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
     std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
