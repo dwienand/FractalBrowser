@@ -28,6 +28,16 @@ Mandelbrot::Mandelbrot(int width, int height){
     memset(mandelbrotPixels, 0, width*height*sizeof(unsigned int));
     
     
+    mandelbrotIntTemp = new unsigned int[width * height];
+    memset(mandelbrotIntTemp, 0, width * height * sizeof(unsigned int));
+    
+    mandelbrotFloatTemp = new double[width * height];
+    memset(mandelbrotFloatTemp, 0.0, width * height * sizeof(double));
+    
+    mandelbrotPixelsTemp = new unsigned int[width*height];
+    memset(mandelbrotPixelsTemp, 0, width*height*sizeof(unsigned int));
+    
+    
     const char* filename ="./color_palettes/test_gradient.bmp";
     palette = ReadBMP(filename);
     
@@ -68,6 +78,10 @@ void* Mandelbrot::calculateMandelbrotColThread(int threadID){
 
 inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     
+    if(canReuseFrame){
+        canReuseFrame = false;
+        return;
+    }
     
     
     int iterations = 0;
@@ -79,6 +93,7 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     double CImag = upperImag - ((double)py) / ((double) height) * (upperImag - lowerImag);
     
     bool skipIteration = false;
+    
     
     //we know the fractal has a main cardioid and a period 2 bulb
     // that we can just set to max iteration right away
@@ -288,6 +303,7 @@ void Mandelbrot::moveFrameDown(){
     upperImag -= stepSize;
     lowerImag -= stepSize;
     
+    
 }
 
 void Mandelbrot::moveFrameLeft(){
@@ -297,14 +313,75 @@ void Mandelbrot::moveFrameLeft(){
     leftReal -= stepSize;
     rightReal -= stepSize;
     
+    
 }
 
 void Mandelbrot::moveFrameRight(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
     
+    int pixelSteps = moveSpeed * width;
+    
+    Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
+    newSlice->setDimensions(rightReal, rightReal + stepSize, lowerImag, upperImag);
+    newSlice->render();
+    
+    for(int i = 0; i < width; i++){
+        for (int j = 0; j < height; j++) {
+            if(i < width - pixelSteps){
+                mandelbrotFloatTemp[i*width + j] =mandelbrotFloat[(i+pixelSteps) * width+ j];
+                mandelbrotIntTemp[i*width + j] =mandelbrotInt[(i+pixelSteps) * width+ j];
+            }
+            else{
+                mandelbrotFloatTemp[i*width + j] =newSlice->mandelbrotFloat[(i-(width-pixelSteps)) * width+ j];
+                mandelbrotIntTemp[i*width + j] = newSlice->mandelbrotInt[(i-(width-pixelSteps)) * width+ j];
+            }
+        }
+    }
+    /*
+    
+    for (int i = 0; i < pixelSteps; i++) {
+        for (int j = 0; j < height; j++) {
+            cout << newSlice->mandelbrotInt[i*width + j] << ";";
+        }
+        cout << "\n";
+    }
+    
+    for (int i = 0; i < width; i++){
+        cout << "==";
+    }
+    cout << "\n"   ;
+    
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            cout << mandelbrotInt[i*width + j] << ";";
+        }
+        cout << "\n";
+    }
+    
+    for (int i = 0; i < width; i++){
+        cout << "==";
+    }
+    cout << "\n"   ;
+    
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            cout << mandelbrotIntTemp[i*width + j] << ";";
+        }
+        cout << "\n";
+    }
+     
+     */
+    
+    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+    
+    delete newSlice;
+    
+    
     leftReal += stepSize;
     rightReal += stepSize;
+    
+    canReuseFrame = true;
     
 }
 
@@ -320,6 +397,8 @@ void Mandelbrot::zoomIn(){
     
     upperImag -= verticalStepSize;
     lowerImag += verticalStepSize;
+    
+    canReuseFrame = false;
 }
 
 
@@ -337,6 +416,8 @@ void Mandelbrot::zoomOut(){
     upperImag += verticalStepSize;
     lowerImag -= verticalStepSize;
     
+    canReuseFrame = false;
+    
 }
 
 void Mandelbrot::reset(){
@@ -344,6 +425,8 @@ void Mandelbrot::reset(){
     rightReal = initialRightReal;
     lowerImag = initialLowerImag;
     upperImag = initialUpperImag;
+    
+    canReuseFrame = false;
 }
 
 
@@ -389,6 +472,14 @@ inline int Mandelbrot::mirrorPy(int py){
     
     
     return zeroPos - offset ;
+}
+
+void Mandelbrot::savePreviousDimensions(){
+    this->previousLeftReal = this->leftReal;
+    this->previousLowerImag = this->lowerImag;
+    this->previousRightReal = this->rightReal;
+    this->previousUpperImag = this->upperImag;
+    
 }
 
 

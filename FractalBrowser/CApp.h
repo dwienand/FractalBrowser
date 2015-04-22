@@ -28,7 +28,7 @@ private:
     
     SDL_Texture* texture;
     
-    int width = 1200, height=800;
+    int width = 800, height=600;
     
     Uint32 * pixels;
     

@@ -18,6 +18,7 @@
 #include <vector>
 #include "BMPReader.h"
 #include <thread>
+#include <unordered_map>
 
 bool cardioidTest(double real, double imag);
 bool period2BulbTest(double real, double imag);
@@ -30,6 +31,10 @@ private:
     unsigned int* mandelbrotInt;
     double* mandelbrotFloat;
     unsigned int* mandelbrotPixels;
+    
+    unsigned int* mandelbrotIntTemp;
+    double* mandelbrotFloatTemp;
+    unsigned int* mandelbrotPixelsTemp;
     
     
     std::vector<unsigned int>* palette;
@@ -53,6 +58,13 @@ private:
     double rightReal = initialRightReal;
     double lowerImag = initialLowerImag;
     double upperImag = initialUpperImag;
+    
+    double previousLeftReal = 0;
+    double previousRightReal = 0;
+    double previousLowerImag = 0;
+    double previousUpperImag = 0;
+    
+    bool canReuseFrame = false;
     
     
     double moveSpeed = 0.1;
@@ -88,7 +100,7 @@ private:
     void calculateMandelbrotMultithreaded();
     void calculateMandelbrotPoint(int px, int py);
     
-    
+    void savePreviousDimensions();
     
     
 public:
