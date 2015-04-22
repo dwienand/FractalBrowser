@@ -25,7 +25,7 @@ bool period2BulbTest(double real, double imag);
 class Mandelbrot {
 private:
     
-    int numThreads = 8;
+    int numThreads = 1;
     int width, height;
     unsigned int* mandelbrotInt;
     double* mandelbrotFloat;
@@ -88,7 +88,7 @@ private:
     void calculateMandelbrotMultithreaded();
     void calculateMandelbrotPoint(int px, int py);
     
-    int mirrorPy(int py);
+    
     
     
 public:
@@ -115,6 +115,7 @@ public:
     void halfIterations();
     
     unsigned int* getMandelbrotPixels(){return this->mandelbrotPixels;};
+    int mirrorPy(int py);
     
 };
 

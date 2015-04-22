@@ -88,13 +88,16 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     }
     
     // check symmetry
-    // assume we're rendering from top to bottom
+    // assume we're rendering from bottom to top
     if (CImag < 0 && -CImag < upperImag){
         //find mirrored py value
         int mirroredPy = mirrorPy(py);
-        //cout << "Original CImag: " << CImag << ", original py: " << py << ", mirrored py: " << py_mirrored << "\n";
-        iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
-        skipIteration = true;
+        //check if mirrored pixel has actually been assigned, prevents black line from appearing at middle of mandelbrot
+        if (mandelbrotInt[mirroredPy*width+px] != 0){
+            //cout << "Original CImag: " << CImag << ", original py: " << py << ", mirrored py: " << mirroredPy << "\n";
+            iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
+            skipIteration = true;
+        }
     }
     
     
@@ -157,6 +160,8 @@ void Mandelbrot::render(){
     LOG(INFO) << "Finished rendering Mandelbrot, took " << runTime << "ms.";
     
 }
+
+
 
 
 void Mandelbrot::applyColorFilter(){
@@ -272,16 +277,16 @@ void Mandelbrot::rotateColorFilterRight(){
 void Mandelbrot::moveFrameUp(){
     double frameHeight = upperImag - lowerImag;
     double stepSize = frameHeight * moveSpeed;
-    upperImag -= stepSize;
-    lowerImag -= stepSize;
+    upperImag += stepSize;
+    lowerImag += stepSize;
     
 }
 
 void Mandelbrot::moveFrameDown(){
     double frameHeight = upperImag - lowerImag;
     double stepSize = frameHeight * moveSpeed;
-    upperImag += stepSize;
-    lowerImag += stepSize;
+    upperImag -= stepSize;
+    lowerImag -= stepSize;
     
 }
 
