@@ -39,7 +39,7 @@ private:
     
     std::vector<unsigned int>* palette;
     
-    unsigned int maxIterations = 1000;
+    unsigned int maxIterations = 10000;
     const double escapeRadius = 20.0;
     
     //color constants
