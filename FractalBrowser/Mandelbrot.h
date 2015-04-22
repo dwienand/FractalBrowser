@@ -100,8 +100,13 @@ private:
     void calculateMandelbrotMultithreaded();
     void calculateMandelbrotPoint(int px, int py);
     
-    void savePreviousDimensions();
     
+    // optimization configs
+    
+    bool checkSymmetry = false ;
+    bool checkCardioidAndBulb = false ;
+    bool moveWithSlices = false ;
+    bool checkPeriodicity = false;
     
 public:
     Mandelbrot(int width, int height);

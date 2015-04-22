@@ -25,6 +25,6 @@ TEST(FractalTest, RenderSpeed) {
 TEST(FractalTest, MirrorPy){
     Mandelbrot* mandelbrot = new Mandelbrot(800, 600);
         
-    EXPECT_EQ(600, mandelbrot->mirrorPy(0));
+    
     
 }

@@ -92,23 +92,24 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     
     //we know the fractal has a main cardioid and a period 2 bulb
     // that we can just set to max iteration right away
-    if (cardioidTest(CReal, CImag) || period2BulbTest(CReal, CImag)){
-        iterations = maxIterations;
-        skipIteration = true;
-    }
-    
-    // check symmetry
-    // assume we're rendering from bottom to top
-    if (CImag < 0 && -CImag < upperImag){
-        //find mirrored py value
-        int mirroredPy = mirrorPy(py);
-        //check if mirrored pixel has actually been assigned, prevents black line from appearing at middle of mandelbrot
-        if (mandelbrotInt[mirroredPy*width+px] != 0){
-            //cout << "Original CImag: " << CImag << ", original py: " << py << ", mirrored py: " << mirroredPy << "\n";
-            iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
+    if(checkCardioidAndBulb)
+        if (cardioidTest(CReal, CImag) || period2BulbTest(CReal, CImag)){
+            iterations = maxIterations;
             skipIteration = true;
         }
-    }
+    
+    // check symmetry
+    if(checkSymmetry)
+        if (CImag < 0 && -CImag < upperImag){
+            //assume we're rendering from bottom to top
+            //find mirrored py value
+            int mirroredPy = mirrorPy(py);
+            //check if mirrored pixel has actually been assigned, prevents black line from appearing at middle of mandelbrot
+            if (mandelbrotInt[mirroredPy*width+px] != 0){
+                iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
+                skipIteration = true;
+            }
+        }
     
     
     //do iteration step
@@ -118,11 +119,12 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
             double ZImagTemp = 2*ZReal*ZImag + CImag;
             
             //check for periodicity
-            if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
-            {
-                iterations = maxIterations;
-                break;
-            }
+            if(checkPeriodicity)
+                if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
+                {
+                    iterations = maxIterations;
+                    break;
+                }
             
             ZReal = ZRealTemp;
             ZImag = ZImagTemp;
@@ -293,36 +295,38 @@ void Mandelbrot::moveFrameUp(){
     double frameHeight = upperImag - lowerImag;
     double stepSize = frameHeight * moveSpeed;
     
-    int pixelSteps = moveSpeed * height;
     
-    //
-    
-    Mandelbrot* newSlice = new Mandelbrot(width, pixelSteps);
-    newSlice->setDimensions(leftReal, rightReal, upperImag, upperImag + stepSize);
-    newSlice->render();
-    
-    for(int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++) {
-            if(j >= pixelSteps){
-                mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[(j-pixelSteps) * width + i ];
-                mandelbrotIntTemp[j*width + i] = mandelbrotInt[(j-pixelSteps) * width + i ];
-                mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[(j-pixelSteps) * width + i ];
-            }
-            else{
-                mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width + i ];
-                mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width + i ];
-                mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width + i ];
+    if(moveWithSlices){
+        int pixelSteps = moveSpeed * height;
+        
+        Mandelbrot* newSlice = new Mandelbrot(width, pixelSteps);
+        newSlice->setDimensions(leftReal, rightReal, upperImag, upperImag + stepSize);
+        newSlice->render();
+        
+        for(int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
+                if(j >= pixelSteps){
+                    mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[(j-pixelSteps) * width + i ];
+                    mandelbrotIntTemp[j*width + i] = mandelbrotInt[(j-pixelSteps) * width + i ];
+                    mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[(j-pixelSteps) * width + i ];
+                }
+                else{
+                    mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width + i ];
+                    mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width + i ];
+                    mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width + i ];
+                }
             }
         }
+        
+        std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+        std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
+        std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
+        
+        delete newSlice;
+        
+        canReuseFrame = true;
     }
     
-    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
-    std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
-    std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
-    
-    delete newSlice;
-    
-    canReuseFrame = true;
     upperImag += stepSize;
     lowerImag += stepSize;
     
@@ -332,36 +336,39 @@ void Mandelbrot::moveFrameDown(){
     double frameHeight = upperImag - lowerImag;
     double stepSize = frameHeight * moveSpeed;
     
-    int pixelSteps = moveSpeed * height;
     
-    //
-    
-    Mandelbrot* newSlice = new Mandelbrot(width, pixelSteps);
-    newSlice->setDimensions(leftReal, rightReal, lowerImag - stepSize, lowerImag );
-    newSlice->render();
-    
-    for(int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++) {
-            if(j < height - pixelSteps){
-                mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[(j + pixelSteps) * width + i ];
-                mandelbrotIntTemp[j*width + i] = mandelbrotInt[(j + pixelSteps) * width + i ];
-                mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[(j +pixelSteps) * width + i ];
-            }
-            else{
-                mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[(j - (height-pixelSteps)) * newSlice->width + i ];
-                mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[(j - (height-pixelSteps)) * newSlice->width + i ];
-                mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[(j - (height-pixelSteps)) * newSlice->width + i ];
+    if(moveWithSlices){
+        int pixelSteps = moveSpeed * height;
+        
+        Mandelbrot* newSlice = new Mandelbrot(width, pixelSteps);
+        newSlice->setDimensions(leftReal, rightReal, lowerImag - stepSize, lowerImag );
+        newSlice->render();
+        
+        for(int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
+                if(j < height - pixelSteps){
+                    mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[(j + pixelSteps) * width + i ];
+                    mandelbrotIntTemp[j*width + i] = mandelbrotInt[(j + pixelSteps) * width + i ];
+                    mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[(j +pixelSteps) * width + i ];
+                }
+                else{
+                    mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[(j - (height-pixelSteps)) * newSlice->width + i ];
+                    mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[(j - (height-pixelSteps)) * newSlice->width + i ];
+                    mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[(j - (height-pixelSteps)) * newSlice->width + i ];
+                }
             }
         }
+        
+        std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+        std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
+        std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
+        
+        delete newSlice;
+        
+        canReuseFrame = true;
     }
     
-    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
-    std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
-    std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
     
-    delete newSlice;
-    
-    canReuseFrame = true;
     upperImag -= stepSize;
     lowerImag -= stepSize;
 }
@@ -370,40 +377,40 @@ void Mandelbrot::moveFrameLeft(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
     
-    int pixelSteps = moveSpeed * width;
-
-    //
     
-    Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
-    newSlice->setDimensions(leftReal - stepSize, leftReal, lowerImag, upperImag);
-    newSlice->render();
-    
-    for(int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++) {
-            if(i >= pixelSteps){
-                mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[j * width + i - pixelSteps];
-                mandelbrotIntTemp[j*width + i] = mandelbrotInt[j* width+ i - pixelSteps];
-                mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[j* width+ i - pixelSteps];
-            }
-            else{
-                mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width + i ];
-                mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width + i ];
-                mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width + i ];
+    if(moveWithSlices){
+        int pixelSteps = moveSpeed * width;
+        
+        Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
+        newSlice->setDimensions(leftReal - stepSize, leftReal, lowerImag, upperImag);
+        newSlice->render();
+        
+        for(int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
+                if(i >= pixelSteps){
+                    mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[j * width + i - pixelSteps];
+                    mandelbrotIntTemp[j*width + i] = mandelbrotInt[j* width+ i - pixelSteps];
+                    mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[j* width+ i - pixelSteps];
+                }
+                else{
+                    mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width + i ];
+                    mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width + i ];
+                    mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width + i ];
+                }
             }
         }
+        
+        std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+        std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
+        std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
+        
+        delete newSlice;
+        canReuseFrame = true;
     }
-    
-    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
-    std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
-    std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
-    
-    delete newSlice;
-    
     
     leftReal -= stepSize;
     rightReal -= stepSize;
     
-    canReuseFrame = true;
     
     
 }
@@ -412,38 +419,42 @@ void Mandelbrot::moveFrameRight(){
     double frameWidth = rightReal - leftReal;
     double stepSize = frameWidth * moveSpeed;
     
-    int pixelSteps = moveSpeed * width;
     
-    Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
-    newSlice->setDimensions(rightReal, rightReal + stepSize, lowerImag, upperImag);
-    newSlice->render();
-    
-    for(int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++) {
-            if(i < width - pixelSteps){
-                mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[j * width + i + pixelSteps];
-                mandelbrotIntTemp[j*width + i] = mandelbrotInt[j* width+ i + pixelSteps];
-                mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[j* width+ i + pixelSteps];
-            }
-            else{
-                mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width+ i - (width - pixelSteps)];
-                mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width+ i - (width - pixelSteps)];
-                mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width+ i - (width - pixelSteps)];
+    if(moveWithSlices){
+        int pixelSteps = moveSpeed * width;
+        
+        Mandelbrot* newSlice = new Mandelbrot(pixelSteps, height);
+        newSlice->setDimensions(rightReal, rightReal + stepSize, lowerImag, upperImag);
+        newSlice->render();
+        
+        for(int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
+                if(i < width - pixelSteps){
+                    mandelbrotFloatTemp[j*width + i] = mandelbrotFloat[j * width + i + pixelSteps];
+                    mandelbrotIntTemp[j*width + i] = mandelbrotInt[j* width+ i + pixelSteps];
+                    mandelbrotPixelsTemp[j*width + i] = mandelbrotPixels[j* width+ i + pixelSteps];
+                }
+                else{
+                    mandelbrotFloatTemp[j*width + i] =newSlice->mandelbrotFloat[j * newSlice->width+ i - (width - pixelSteps)];
+                    mandelbrotIntTemp[j*width + i] = newSlice->mandelbrotInt[j * newSlice->width+ i - (width - pixelSteps)];
+                    mandelbrotPixelsTemp[j*width + i] = newSlice->mandelbrotPixels[j * newSlice->width+ i - (width - pixelSteps)];
+                }
             }
         }
+        
+        std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
+        std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
+        std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
+        
+        delete newSlice;
+        
+        canReuseFrame = true;
     }
-    
-    std::memcpy(mandelbrotFloat, mandelbrotFloatTemp, width*height*sizeof( double));
-    std::memcpy(mandelbrotInt, mandelbrotIntTemp, width*height*sizeof( unsigned int));
-    std::memcpy(mandelbrotPixels, mandelbrotPixelsTemp, width*height*sizeof( unsigned int));
-    
-    delete newSlice;
-    
     
     leftReal += stepSize;
     rightReal += stepSize;
     
-    canReuseFrame = true;
+    
     
 }
 
@@ -534,14 +545,6 @@ inline int Mandelbrot::mirrorPy(int py){
     
     
     return zeroPos - offset ;
-}
-
-void Mandelbrot::savePreviousDimensions(){
-    this->previousLeftReal = this->leftReal;
-    this->previousLowerImag = this->lowerImag;
-    this->previousRightReal = this->rightReal;
-    this->previousUpperImag = this->upperImag;
-    
 }
 
 
