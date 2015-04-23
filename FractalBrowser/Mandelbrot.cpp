@@ -181,9 +181,8 @@ void Mandelbrot::render(){
     }
     else{
         calculateMandelbrotMultithreaded();
-        applyColorFilter();
     }
-    
+    applyColorFilter();
     
     
     long endTime = std::chrono::duration_cast< std::chrono::milliseconds >(
