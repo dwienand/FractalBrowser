@@ -85,7 +85,6 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     
     
     int iterations = 0;
-    double iterationsFloat = 0;
     double ZReal = 0.0;
     double ZImag = 0.0;
     //convert pixel x coordinate to coordinate on real axis of complex plane
@@ -160,12 +159,7 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     else
         mandelbrotFloat[py*width+px] = maxIterations;
     
-    
-    
 }
-
-
-
 
 
 

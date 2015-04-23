@@ -195,7 +195,7 @@ TEST(FractalTest, MandelbrotTourAllOptimizations1Threads){
 TEST(FractalTest, MandelbrotTourAllOptimizations2Threads){
     Mandelbrot* mandelbrot = new Mandelbrot(WIDTH, HEIGHT);
     setAllOptimizationsOn( mandelbrot);
-    mandelbrot->numThreads e= 2;
+    mandelbrot->numThreads = 2;
     
     tourMandelbrot(mandelbrot);
 }
