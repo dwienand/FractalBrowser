@@ -51,8 +51,6 @@ Mandelbrot::~Mandelbrot(){
     delete this->mandelbrotIntTemp;
     delete this->mandelbrotFloatTemp;
     delete this->mandelbrotPixelsTemp;
-    
-    delete this->palette;
 }
 
 
@@ -87,6 +85,7 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     
     
     int iterations = 0;
+    double iterationsFloat = 0;
     double ZReal = 0.0;
     double ZImag = 0.0;
     //convert pixel x coordinate to coordinate on real axis of complex plane
@@ -94,15 +93,14 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
     //convert pixel y coordinate to coordinate on imaginary axis of complex plane
     double CImag = upperImag - ((double)py) / ((double) height) * (upperImag - lowerImag);
     
-    bool skipIteration = false;
-    
     
     //we know the fractal has a main cardioid and a period 2 bulb
     // that we can just set to max iteration right away
     if(checkCardioidAndBulb)
         if (cardioidTest(CReal, CImag) || period2BulbTest(CReal, CImag)){
-            iterations = maxIterations;
-            skipIteration = true;
+            mandelbrotInt[py*width+px] = maxIterations;
+            mandelbrotFloat[py*width+px] = maxIterations;
+            return;
         }
     
     // check symmetry
@@ -113,30 +111,32 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
             int mirroredPy = mirrorPy(py);
             //check if mirrored pixel has actually been assigned, prevents black line from appearing at middle of mandelbrot
             if (mandelbrotInt[mirroredPy*width+px] != 0){
-                iterations = mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
-                skipIteration = true;
+                mandelbrotInt[py*width+px] = mandelbrotInt[mirroredPy*width+px];
+                mandelbrotFloat[py*width+px] = mandelbrotFloat[mirroredPy*width+px];
+                
+                return;
             }
         }
     
     
     //do iteration step
-    if (!skipIteration)
-        while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
-            double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
-            double ZImagTemp = 2*ZReal*ZImag + CImag;
-            
-            //check for periodicity
-            if(checkPeriodicity)
-                if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
-                {
-                    iterations = maxIterations;
-                    break;
-                }
-            
-            ZReal = ZRealTemp;
-            ZImag = ZImagTemp;
-            iterations++;
-        }
+    while(ZReal*ZReal + ZImag*ZImag < escapeRadius && iterations < maxIterations){
+        double ZRealTemp = ZReal*ZReal - ZImag*ZImag + CReal;
+        double ZImagTemp = 2*ZReal*ZImag + CImag;
+        
+        //check for periodicity
+        if(checkPeriodicity)
+            if (ZRealTemp == ZReal  &&  ZImagTemp == ZImag)
+            {
+                mandelbrotInt[py*width+px] = maxIterations;
+                mandelbrotFloat[py*width+px] = maxIterations;
+                return;
+            }
+        
+        ZReal = ZRealTemp;
+        ZImag = ZImagTemp;
+        iterations++;
+    }
     
     //save raw iteration count
     mandelbrotInt[py*width+px] = iterations;
@@ -147,10 +147,19 @@ inline void Mandelbrot::calculateMandelbrotPoint(int px, int py){
         
         double modulus = sqrt (ZReal * ZReal + ZImag * ZImag);
         double nu = log(log(modulus)/log(2))/log(2);
-        mandelbrotFloat[py*width+px] = iterations + 1 - nu;
+        
+        double floatVal = iterations + 1 - nu;
+        mandelbrotFloat[py*width+px] =floatVal;
+        
+        if (floatVal != floatVal){
+            cout << " nu: " << nu << "\n";
+        }
+        
+        
     }
     else
         mandelbrotFloat[py*width+px] = maxIterations;
+    
     
     
 }
@@ -260,6 +269,7 @@ inline unsigned int Mandelbrot::continuousColoring(unsigned int iterations, doub
     }
     double relativePos = log(floatPart)/ log(maxIterations);
     int idx = ( (int) ( (double) palette->size()) * relativePos);
+  
     unsigned int color = (*palette)[idx];
     return color;
     

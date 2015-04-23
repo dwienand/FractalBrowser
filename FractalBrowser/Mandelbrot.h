@@ -137,7 +137,7 @@ public:
     bool moveWithSlices = true ;
     bool checkPeriodicity = true;
     
-    int numThreads = 8;
+    int numThreads = 1;
     
 };
 

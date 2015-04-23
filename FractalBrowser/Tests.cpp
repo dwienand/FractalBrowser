@@ -19,7 +19,7 @@
 TEST(FractalTest, RenderSpeed) {
     // This test is named "Negative", and belongs to the "FactorialTest"
     // test case.
- 
+    
     Mandelbrot* set = new Mandelbrot(WIDTH,HEIGHT);
     
     set->render();
@@ -195,7 +195,7 @@ TEST(FractalTest, MandelbrotTourAllOptimizations1Threads){
 TEST(FractalTest, MandelbrotTourAllOptimizations2Threads){
     Mandelbrot* mandelbrot = new Mandelbrot(WIDTH, HEIGHT);
     setAllOptimizationsOn( mandelbrot);
-    mandelbrot->numThreads = 2;
+    mandelbrot->numThreads e= 2;
     
     tourMandelbrot(mandelbrot);
 }
@@ -246,6 +246,12 @@ TEST(FractalTest, MandelbrotTourAllOptimizations8Threads){
     mandelbrot->numThreads = 8;
     
     tourMandelbrot(mandelbrot);
+}
+
+TEST(FractalTest, RotateColorPalette){
+    Mandelbrot* mandelbrot = new Mandelbrot(WIDTH, HEIGHT);
+    for(int i = 0; i < 10; i++)
+        mandelbrot->rotateColorFilterRight();
 }
 
 
