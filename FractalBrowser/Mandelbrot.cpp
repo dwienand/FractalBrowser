@@ -46,6 +46,13 @@ Mandelbrot::Mandelbrot(int width, int height){
 Mandelbrot::~Mandelbrot(){
     delete this->mandelbrotInt;
     delete this->mandelbrotFloat;
+    delete this->mandelbrotPixels;
+    
+    delete this->mandelbrotIntTemp;
+    delete this->mandelbrotFloatTemp;
+    delete this->mandelbrotPixelsTemp;
+    
+    delete this->palette;
 }
 
 

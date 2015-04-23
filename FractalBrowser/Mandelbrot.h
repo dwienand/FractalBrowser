@@ -26,7 +26,7 @@ bool period2BulbTest(double real, double imag);
 class Mandelbrot {
 private:
     
-    int numThreads = 1;
+    
     int width, height;
     unsigned int* mandelbrotInt;
     double* mandelbrotFloat;
@@ -101,12 +101,7 @@ private:
     void calculateMandelbrotPoint(int px, int py);
     
     
-    // optimization configs
-    
-    bool checkSymmetry = false ;
-    bool checkCardioidAndBulb = false ;
-    bool moveWithSlices = false ;
-    bool checkPeriodicity = false;
+
     
 public:
     Mandelbrot(int width, int height);
@@ -133,6 +128,16 @@ public:
     
     unsigned int* getMandelbrotPixels(){return this->mandelbrotPixels;};
     int mirrorPy(int py);
+    
+    
+    // optimization configs
+    
+    bool checkSymmetry = true ;
+    bool checkCardioidAndBulb = true ;
+    bool moveWithSlices = true ;
+    bool checkPeriodicity = true;
+    
+    int numThreads = 8;
     
 };
 
